@@ -14,20 +14,20 @@ export const Experience: React.FC<ExperienceProps> = ({ onHireMeClick }) => {
   // Custom curated visual assets for each alternating arch & circular photo
   const visuals = [
     {
-      arch: '/images/skills_software_tools.jpg',
-      circle: '/images/coffee_latte_detail_1794202050074.jpg',
+      arch: '/images/skills-software-tools.jpg',
+      circle: '/images/coffee-latte-detail.jpg',
       altArch: 'Technical support diagnostic tools and dual-screen computer workstation',
       altCircle: 'Cozy artisan morning coffee cup with latte art',
     },
     {
-      arch: '/images/customer_care_headset_station.jpg',
-      circle: '/images/project_website_creation_1793783065902.jpg',
+      arch: '/images/customer-care-headset-station.jpg',
+      circle: '/images/project-website-creation.jpg',
       altArch: 'Customer care professional communication station with headset and laptop',
       altCircle: 'Responsive digital website layout',
     },
     {
-      arch: '/images/skills_admin_organization.jpg',
-      circle: '/images/planner_notes_arch_1794202023456.jpg',
+      arch: '/images/skills-admin-organization.jpg',
+      circle: '/images/planner-notes-arch.jpg',
       altArch: 'Structured administrative documentation, task folders and filing workspace',
       altCircle: 'Daily planner schedule note',
     },

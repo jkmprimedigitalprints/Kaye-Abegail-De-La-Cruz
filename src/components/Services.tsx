@@ -15,31 +15,31 @@ export const Services: React.FC<ServicesProps> = ({ onSelectService }) => {
   // Dedicated high-resolution royalty-free service images matching warm terracotta aesthetic
   const serviceVisuals: Record<string, { image: string; alt: string }> = {
     'general-va': {
-      image: '/images/service_general_va.jpg',
+      image: '/images/service-general-va.jpg',
       alt: 'Minimalist organized workstation with notepad, laptop and coffee for virtual assistant tasks',
     },
     'data-entry': {
-      image: '/images/service_data_entry.jpg',
+      image: '/images/service-data-entry.jpg',
       alt: 'Structured spreadsheet records, data deduplication, and cleanup tables on screen',
     },
     'email-management': {
-      image: '/images/service_email_management.jpg',
+      image: '/images/service-email-management.jpg',
       alt: 'Organized email inbox triage, labeling, and customer drafting workspace',
     },
     'calendar-management': {
-      image: '/images/service_calendar_management.jpg',
+      image: '/images/service-calendar-management.jpg',
       alt: 'Time blocking scheduler and conflict-free calendar management planner',
     },
     'appointment-scheduling': {
-      image: '/images/service_appointment_scheduling.jpg',
+      image: '/images/service-appointment-scheduling.jpg',
       alt: 'Consultation scheduling, meeting booking, and intake confirmation setup',
     },
     'document-organization': {
-      image: '/images/service_document_organization.jpg',
+      image: '/images/service-document-organization.jpg',
       alt: 'Structured Google Drive folders, document filing, and SOP repository',
     },
     'website-creation': {
-      image: '/images/service_website_creation.jpg',
+      image: '/images/service-website-creation.jpg',
       alt: 'Clean and modern mobile-responsive website layout and portfolio page',
     },
   };
@@ -102,7 +102,7 @@ export const Services: React.FC<ServicesProps> = ({ onSelectService }) => {
           <AnimatePresence mode="popLayout">
             {displayedServices.map((service, index) => {
               const visual = serviceVisuals[service.id] || {
-                image: '/images/service_general_va.jpg',
+                image: '/images/service-general-va.jpg',
                 alt: service.title,
               };
 

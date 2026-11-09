@@ -26,19 +26,19 @@ export const Skills: React.FC = () => {
 
   const categoryImages: Record<string, { image: string; alt: string }> = {
     admin: {
-      image: '/images/skills_admin_organization.jpg',
+      image: '/images/skills-admin-organization.jpg',
       alt: 'Minimalist organized desktop workspace with planner, document filing folders, notebook and laptop',
     },
     communication: {
-      image: '/images/customer_care_headset_station.jpg',
+      image: '/images/customer-care-headset-station.jpg',
       alt: 'Customer care professional communication station with headset and laptop',
     },
     software: {
-      image: '/images/skills_software_tools.jpg',
+      image: '/images/skills-software-tools.jpg',
       alt: 'Modern workspace with dual screens displaying software productivity tools and spreadsheets',
     },
     competencies: {
-      image: '/images/skills_core_competencies.jpg',
+      image: '/images/skills-core-competencies.jpg',
       alt: 'Collaborative team working together with high focus and execution',
     },
   };
@@ -145,7 +145,7 @@ export const Skills: React.FC = () => {
           <AnimatePresence mode="popLayout">
             {filteredCategories.map((group, idx) => {
               const catVisual = categoryImages[group.id] || {
-                image: '/images/skills_admin_organization.jpg',
+                image: '/images/skills-admin-organization.jpg',
                 alt: group.categoryName,
               };
 

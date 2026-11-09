@@ -49,80 +49,96 @@ section[id] {
   }
 }
 
-.reveal-on-scroll {
+/* Default safe baseline: all cards and images visible */
+.reveal-on-scroll,
+.reveal-card,
+.reveal-image,
+[data-reveal] {
+  opacity: 1;
+  transform: none;
+}
+
+/* Progressive enhancement: animated entrance only when JS is enabled */
+html.js .reveal-on-scroll {
   opacity: 0;
-  transform: translateY(24px);
-  animation: autoReveal 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.6s forwards;
+  transform: translateY(20px);
+  animation: autoReveal 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.5s forwards;
   transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
   will-change: opacity, transform;
 }
 
-.reveal-on-scroll.is-revealed {
+html.js .reveal-on-scroll.is-revealed {
   opacity: 1;
   transform: translateY(0);
   animation: none;
 }
 
-.reveal-card {
+html.js .reveal-card {
   opacity: 0;
-  transform: translateY(20px) scale(0.99);
-  animation: autoReveal 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.5s forwards;
+  transform: translateY(16px) scale(0.99);
+  animation: autoReveal 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.4s forwards;
   transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1), transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
   will-change: opacity, transform;
 }
 
-.reveal-card.is-revealed {
+html.js .reveal-card.is-revealed {
   opacity: 1;
   transform: translateY(0) scale(1);
   animation: none;
 }
 
-.reveal-image {
+html.js .reveal-image {
   opacity: 0;
   transform: scale(0.98);
-  animation: autoReveal 0.6s ease-out 0.5s forwards;
+  animation: autoReveal 0.6s ease-out 0.4s forwards;
   transition: opacity 0.8s ease-out, transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
   will-change: opacity, transform;
 }
 
-.reveal-image.is-revealed {
+html.js .reveal-image.is-revealed {
   opacity: 1;
   transform: scale(1);
   animation: none;
 }
 
-[data-reveal="fade-in"] {
+html.js [data-reveal="fade-in"] {
   opacity: 0;
+  animation: autoReveal 0.6s ease-out 0.5s forwards;
   transition: opacity 0.6s ease-out;
   will-change: opacity;
 }
 
-[data-reveal="fade-in"].is-revealed {
+html.js [data-reveal="fade-in"].is-revealed {
   opacity: 1;
+  animation: none;
 }
 
-[data-reveal="slide-left"] {
+html.js [data-reveal="slide-left"] {
   opacity: 0;
-  transform: translateX(-30px);
+  transform: translateX(-24px);
+  animation: autoReveal 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.5s forwards;
   transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
   will-change: opacity, transform;
 }
 
-[data-reveal="slide-left"].is-revealed {
+html.js [data-reveal="slide-left"].is-revealed {
   opacity: 1;
   transform: translateX(0);
+  animation: none;
 }
 
-[data-reveal="slide-right"] {
+html.js [data-reveal="slide-right"] {
   opacity: 0;
-  transform: translateX(30px);
+  transform: translateX(24px);
+  animation: autoReveal 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.5s forwards;
   transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
   will-change: opacity, transform;
 }
 
-[data-reveal="slide-right"].is-revealed {
+html.js [data-reveal="slide-right"].is-revealed {
   opacity: 1;
   transform: translateX(0);
+  animation: none;
 }
 
 /* =========================================================================

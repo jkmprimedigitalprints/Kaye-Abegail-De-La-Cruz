@@ -31,7 +31,7 @@ export const WorkSamples: React.FC = () => {
       title: 'Customer Support Email Templates',
       description: 'Professional replies for inquiries, complaints, and follow-ups.',
       tag: 'Writing',
-      imageUrl: '/images/work_sample_email_templates.jpg',
+      imageUrl: '/images/work-sample-email-templates.jpg',
       altText: 'Customer Support Email Templates with professional customer service drafting',
       context: 'Created structured, polite response drafts for handling three of the most common customer interactions: initial product inquiries, complaint de-escalation with escalation notice, and courteous post-resolution follow-ups.',
       deliverables: [
@@ -46,7 +46,7 @@ export const WorkSamples: React.FC = () => {
       title: 'Spreadsheet Cleanup',
       description: 'Messy data turned into a clean, consistent, sorted sheet.',
       tag: 'Data Entry',
-      imageUrl: '/images/work_sample_spreadsheet_cleanup.jpg',
+      imageUrl: '/images/work-sample-spreadsheet-cleanup.jpg',
       altText: 'Spreadsheet Cleanup showing duplicate removal, formatting standardization, and sorted data',
       context: 'Normalized raw data containing inconsistent name casing, mixed date notations, and duplicate entries into a clean, deduplicated, and sorted spreadsheet.',
       deliverables: [
@@ -62,7 +62,7 @@ export const WorkSamples: React.FC = () => {
       title: 'Weekly Schedule Plan',
       description: 'An organized weekly calendar for a busy business owner.',
       tag: 'Scheduling',
-      imageUrl: '/images/work_sample_weekly_schedule.jpg',
+      imageUrl: '/images/work-sample-weekly-schedule.jpg',
       altText: 'Weekly Schedule Plan with color-coded calendar and administrative time blocking',
       context: 'Designed an intuitive, color-coded weekly schedule balancing high-priority client meetings, deep focus time for reports, and recurring admin routines.',
       deliverables: [
@@ -78,7 +78,7 @@ export const WorkSamples: React.FC = () => {
       title: 'Basic Website Creation',
       description: 'A clean, modern, and mobile-responsive personal website layout.',
       tag: 'Web Creation',
-      imageUrl: '/images/project_website_creation_1793783065902.jpg',
+      imageUrl: '/images/project-website-creation.jpg',
       altText: 'Modern responsive website mockup on screen with clean typography and balanced layout',
       context: 'Developed a responsive, mobile-first website structure designed for clear visual hierarchy, smooth navigation, working contact integration, and cross-device accessibility.',
       deliverables: [
@@ -95,7 +95,7 @@ export const WorkSamples: React.FC = () => {
       title: 'Executive Daily Planning',
       description: 'Structured time blocking and daily meeting triage for busy founders.',
       tag: 'Scheduling',
-      imageUrl: '/images/planner_notes_arch_1794202023456.jpg',
+      imageUrl: '/images/planner-notes-arch.jpg',
       altText: 'Daily planning notebook and schedule organization notes',
       context: 'Demonstration of daily schedule buffers, priority blocking, and routine admin workflow preparation.',
       deliverables: [
