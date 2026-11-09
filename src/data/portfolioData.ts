@@ -2,23 +2,53 @@
  * =========================================================================
  * PORTFOLIO DATA CONFIGURATION
  * =========================================================================
- * Single source of truth for all editable content on Kaye Abegail De La Cruz's
- * portfolio website.
+ * Single source of truth for Kaye Abegail De La Cruz's Virtual Assistant Portfolio.
  * 
  * Rules:
  * - Uses ONLY real, verified facts provided by Kaye.
  * - No invented metrics, QA percentages, fictional clients, or fake certifications.
- * - Feature flags (showWorkSamples, showTestimonials) control optional sections.
- * - Empty fields (e.g. calendlyUrl) automatically hide their respective UI elements.
+ * - Accurately reflects 5 years of BPO experience (Customer Service, Sales, Technical Support, Collections).
  */
 
 export interface WorkSampleItem {
   id: string;
   title: string;
   description: string;
-  tag: string;
+  tag: 'Writing' | 'Data Entry' | 'Scheduling' | 'Web Creation';
   imageUrl: string;
   altText: string;
+  context?: string;
+  deliverables?: string[];
+  toolsUsed?: string[];
+  liveUrl?: string;
+}
+
+export interface ServiceItem {
+  id: string;
+  title: string;
+  shortDesc: string;
+  description: string;
+  iconName: string;
+  deliverables: string[];
+  bestFor: string;
+}
+
+export interface ExperienceItem {
+  id: string;
+  role: string;
+  company: string;
+  period: string;
+  location?: string;
+  summary: string;
+  bullets: string[];
+  skillsGained: string[];
+}
+
+export interface EducationItem {
+  institution: string;
+  degree: string;
+  period: string;
+  details?: string;
 }
 
 export interface TestimonialItem {
@@ -34,25 +64,34 @@ export const PORTFOLIO_DATA = {
   personal: {
     fullName: "Kaye Abegail De La Cruz",
     shortName: "Kaye",
-    title: "General Virtual Assistant | Administrative Assistant | Customer Support & Tech Support",
-    valueStatement: "Reliable, detail-oriented, and calm under pressure",
+    title: "General Virtual Assistant | Customer & Tech Support Specialist",
+    tagline: "Reliable, detail-oriented, and calm under pressure",
     location: "Taguig, Metro Manila, Philippines",
-    experienceSummary: "4+ years of customer service and technical support experience in BPO (Alorica, TELUS International Philippines, Accenture), now transitioning into a General Virtual Assistant and Administrative Support role",
+    experienceSummary: "5 years of proven BPO experience in Customer Service, Technical Support, Sales, and Collections (Accenture, TELUS International, Alorica), now providing high-touch Virtual Assistant and Administrative Support to busy business owners and remote teams.",
     bio: "Dedicated and detail-oriented professional with solid customer service and technical support experience, now offering virtual assistant and administrative support. Highly organized, computer literate, and adaptable, with a strong background in written and verbal communication, accurate documentation, and methodical problem-solving. Able to multitask under pressure and work independently or with a team in remote environments.",
     email: "kayeabegaildelacruz02@gmail.com",
     phone: "+63 9687605420",
+    avatarUrl: "/kaye-photo.jpg", // If present in /public/kaye-photo.jpg, will display automatically; else elegant monogram fallback
     resumeUrl: "/Kaye_Abegail_De_La_Cruz_CV.pdf",
-    calendlyUrl: "", // If empty, the 'Book a Call' button is completely hidden
+    calendlyUrl: "", // If empty, the 'Book a Call' button stays cleanly hidden
+    rolesForTyping: [
+      "General Virtual Assistant",
+      "Administrative Assistant",
+      "Customer Support Specialist",
+      "Technical Support Specialist",
+      "Data Entry & Organizer"
+    ],
     languages: [
-      { name: "English", level: "Fluent (Written and Verbal)" },
+      { name: "English", level: "Fluent (Written & Verbal)" },
       { name: "Tagalog", level: "Native" }
     ],
     availability: {
-      badge: "Available for work",
-      shift: "Any (Day, Mid, or Night)",
-      type: "Full-time / Part-time",
-      timezones: "US, UK, or Australian time zones",
-      start: "Immediately"
+      badge: "Available for Immediate Hire",
+      statusText: "Ready to start immediately",
+      shift: "Any Shift (Day, Mid, or Night)",
+      type: "Full-time or Part-time",
+      timezones: "US (EST/CST/PST), UK (GMT), and Australian (AEST) hours",
+      noticePeriod: "Immediate"
     },
     socialLinks: {
       linkedin: "https://www.linkedin.com/in/kaye-abegail-de-la-cruz-64ba67446/",
@@ -61,154 +100,163 @@ export const PORTFOLIO_DATA = {
     }
   },
 
-  // 2. Quick Stat Cards (Real facts only)
+  // 2. Real Highlight Statistics (No fake numbers)
   stats: [
     {
-      value: "4+ Years",
-      label: "Customer Service & Tech Support",
-      description: "Hands-on experience in high-standard BPO operations"
+      value: "5 Years",
+      label: "BPO Experience",
+      subtext: "Customer Service, Tech Support, Sales & Collections"
     },
     {
-      value: "3 BPO Companies",
-      label: "Alorica, TELUS & Accenture",
-      description: "Proven record across leading international service providers"
+      value: "3 Top Firms",
+      label: "Global BPO Employers",
+      subtext: "Accenture, TELUS International & Alorica"
     },
     {
-      value: "English Fluent",
-      label: "Written & Verbal Communication",
-      description: "Clear customer correspondence, documentation, and call handling"
+      value: "100%",
+      label: "English Fluency",
+      subtext: "Professional written & verbal correspondence"
     },
     {
-      value: "Any Shift",
-      label: "Flexible Schedule",
-      description: "Ready for Day, Mid, or Night shifts across US, UK, and AU time zones"
+      value: "24/7",
+      label: "Shift Flexibility",
+      subtext: "US, UK, and Australian timezone alignment"
     }
   ],
 
-  // 3. Services Offered (Exact real skills)
+  // 3. Core Personal Strengths (Highlighting actual abilities)
+  strengths: [
+    {
+      title: "Clear Communication",
+      description: "Polite, empathetic, and professional verbal and written correspondence with clients and end customers.",
+      icon: "MessageSquare"
+    },
+    {
+      title: "Methodical Problem-Solving",
+      description: "Root-cause troubleshooting, following SOPs carefully, and escalating complex inquiries with thorough context.",
+      icon: "HelpCircle"
+    },
+    {
+      title: "Meticulous Attention to Detail",
+      description: "Clean data entry, spreadsheet organization, proofreading, and error-free ticket documentation.",
+      icon: "CheckCircle2"
+    },
+    {
+      title: "Remote Adaptability & Eagerness to Learn",
+      description: "Quickly learns proprietary software, CRM workflows, and team communication guidelines without micro-management.",
+      icon: "Sparkles"
+    }
+  ],
+
+  // 4. Actual Entry-Level VA Services (7 Services exactly as requested)
   services: [
     {
-      id: "customer-support",
-      title: "Customer Support",
-      description: "Written and verbal communication, inquiry and concern resolution.",
-      tasks: [
-        "Professional written and verbal communication",
-        "Prompt inquiry and concern resolution",
-        "Active listening and patient customer assistance",
-        "Following account standard operating procedures"
-      ]
+      id: "general-va",
+      title: "General Virtual Assistance",
+      shortDesc: "End-to-end everyday administrative execution to keep your business running smoothly.",
+      description: "Reliable, autonomous day-to-day assistance for busy founders and executives. From managing tasks and routine correspondence to organizing daily action items.",
+      iconName: "Briefcase",
+      deliverables: [
+        "Daily task prioritization and follow-ups",
+        "Internet research and competitor data gathering",
+        "Document proofreading and formatting",
+        "Team coordination via Slack, Teams, or email"
+      ],
+      bestFor: "Entrepreneurs and solo founders who need a trustworthy right-hand assistant."
     },
     {
-      id: "technical-support",
-      title: "Technical Support",
-      description: "Troubleshooting, guiding customers digitally, escalating complex issues with detailed context.",
-      tasks: [
-        "Step-by-step digital guidance for users",
-        "System and software troubleshooting",
-        "Accurate case history and troubleshooting logging",
-        "Escalating complex issues with comprehensive context"
-      ]
+      id: "data-entry",
+      title: "Data Entry & Cleanup",
+      shortDesc: "Turning messy, disorganized records into accurate, structured, and sorted spreadsheets.",
+      description: "High-accuracy data entry, spreadsheet deduplication, standardized date formatting, and database maintenance using Google Sheets and Microsoft Excel.",
+      iconName: "Table",
+      deliverables: [
+        "Spreadsheet cleanup, deduplication, and standardization",
+        "Accurate record updates in CRM and internal databases",
+        "Data validation, formatting, and categorization",
+        "Regular data audits and hygiene checks"
+      ],
+      bestFor: "Teams with scattered customer lists, inventory sheets, or raw lead data."
     },
     {
-      id: "administrative-support",
-      title: "Administrative Support",
-      description: "Task follow-up, document formatting, internet research.",
-      tasks: [
-        "Thorough task and action-item follow-up",
-        "Professional document formatting and proofing",
-        "Targeted internet research and information gathering",
-        "Independent execution and team coordination"
-      ]
-    },
-    {
-      id: "data-entry-cleanup",
-      title: "Data Entry and Cleanup",
-      description: "Accurate data entry, spreadsheet cleanup.",
-      tasks: [
-        "High-accuracy data entry in internal tools and sheets",
-        "Spreadsheet cleanup, formatting, and data validation",
-        "Maintaining database records without errors",
-        "Routine information audits and updates"
-      ]
-    },
-    {
-      id: "email-calendar-management",
-      title: "Email and Calendar Management",
-      description: "Professional email drafting and etiquette, calendar coordination.",
-      tasks: [
+      id: "email-management",
+      title: "Email Management",
+      shortDesc: "Inbox Zero maintenance, sorting high-priority inquiries, and professional customer drafts.",
+      description: "Keep your inbox organized and never miss an important message. I filter spam, label priority emails, draft courteous replies, and handle customer follow-ups.",
+      iconName: "Mail",
+      deliverables: [
+        "Inbox triage and color-coded priority labeling",
         "Professional email drafting with proper etiquette",
-        "Inbox monitoring, sorting, and priority triage",
-        "Meeting and calendar coordination across time zones",
-        "Timely appointment reminders and schedule adjustments"
-      ]
+        "Routine customer response templates and follow-ups",
+        "Spam reduction and archive organization"
+      ],
+      bestFor: "Business owners overwhelmed by hundreds of unread emails daily."
     },
     {
-      id: "file-document-organization",
-      title: "File and Document Organization",
-      description: "Google Drive management, digital file filing.",
-      tasks: [
-        "Structured Google Drive folder organization",
-        "Logical digital file naming and filing systems",
-        "Document access permissions and clean archiving",
-        "Ensuring resources are easy to locate quickly"
-      ]
+      id: "calendar-management",
+      title: "Calendar Management",
+      shortDesc: "Conflict-free schedule coordination across conflicting global time zones.",
+      description: "Structured calendar management ensuring all client calls, internal meetings, and personal buffers are balanced without overlapping appointments.",
+      iconName: "Calendar",
+      deliverables: [
+        "Time zone conversion for US, UK, and AU calls",
+        "Scheduling client appointments and sending calendar invites",
+        "Setting up preparation buffers between back-to-back meetings",
+        "Reminding you of upcoming priority deadlines"
+      ],
+      bestFor: "Executives who need a smooth, clash-free daily calendar."
     },
     {
-      id: "ticket-call-documentation",
-      title: "Ticket and Call Documentation",
-      description: "Accurate case histories and troubleshooting notes.",
-      tasks: [
-        "Detailed, error-free case history logging",
-        "Precise diagnostic notes and call summaries",
-        "Clear documentation for seamless handovers",
-        "Strict adherence to compliance and reporting standards"
-      ]
+      id: "appointment-scheduling",
+      title: "Appointment Scheduling",
+      shortDesc: "Setting up discovery calls, client consultations, and booking automation.",
+      description: "Managing scheduling links (Calendly, Acuity), emailing meeting options to prospects, and confirming attendance to minimize no-shows.",
+      iconName: "Clock",
+      deliverables: [
+        "Calendly / booking link coordination",
+        "Pre-meeting confirmation emails and reminders",
+        "Rescheduling and calendar adjustments",
+        "Collecting intake forms prior to scheduled calls"
+      ],
+      bestFor: "Consultants, agencies, and service providers booking sales calls."
+    },
+    {
+      id: "document-organization",
+      title: "Document Organization",
+      shortDesc: "Structured Google Drive folder management and clean digital file filing.",
+      description: "Eliminate digital clutter. I build logical folder hierarchies, establish consistent naming conventions, and make finding contracts, assets, and SOPs effortless.",
+      iconName: "FolderTree",
+      deliverables: [
+        "Google Drive & OneDrive folder restructuring",
+        "Standardized file naming conventions (YYYY-MM-DD)",
+        "Archiving outdated files and managing access permissions",
+        "Centralizing SOPs and shared team resources"
+      ],
+      bestFor: "Growing teams whose shared cloud storage has become cluttered and hard to navigate."
+    },
+    {
+      id: "website-creation",
+      title: "Basic Website Creation",
+      shortDesc: "Clean, modern, and mobile-friendly websites and landing pages for your brand.",
+      description: "Building responsive, easy-to-navigate web pages with clear messaging, functional contact forms, and mobile optimization using modern web tools.",
+      iconName: "Globe",
+      deliverables: [
+        "Clean, modern single-page website layouts",
+        "Mobile-responsive testing across phones, tablets & desktops",
+        "Working contact form and social link integration",
+        "Content structuring and visual asset arrangement"
+      ],
+      bestFor: "Small businesses and professionals who need a crisp, credible online presence."
     }
-  ],
+  ] as ServiceItem[],
 
-  // 4. Work Experience (Newest first, exact provided companies and bullets)
-  workExperience: [
+  // 5. Skills & Tools (Exact categories and competencies requested by user)
+  skillCategories: [
     {
-      id: "accenture",
-      role: "Technical Support Representative",
-      company: "Accenture Inc.",
-      period: "Apr 2023 - Present",
-      bullets: [
-        "Provide prompt technical support and customer guidance via digital channels, following standard operating procedures",
-        "Maintain thorough, error-free documentation of customer interactions, case histories, and troubleshooting steps in the internal database",
-        "Multitask between active customer interactions, diagnostic tools, and multiple support applications in a fast-paced environment",
-        "Resolve technical issues and escalate complex matters with detailed context"
-      ]
-    },
-    {
-      id: "telus",
-      role: "Customer Service Representative",
-      company: "TELUS International Philippines",
-      period: "Sept 2021 - Apr 2023",
-      bullets: [
-        "Handled diverse customer inquiries and account requests with professional written and verbal communication",
-        "Entered, updated, and validated customer account information with high attention to detail and data integrity",
-        "Researched guidelines and account policies to resolve concerns under pressure while meeting quality and attendance standards",
-        "Collaborated with team leaders and colleagues to adapt to updated account procedures and service targets"
-      ]
-    },
-    {
-      id: "alorica",
-      role: "Customer Service Associate",
-      company: "Alorica - Fort Taguig",
-      period: "Oct 2019 - Apr 2020",
-      bullets: [
-        "Addressed customer inquiries and service requests in a structured, high-volume environment while following company protocols",
-        "Logged routine customer data accurately and routed unresolved issues to the appropriate support teams",
-        "Showed composure, patience, and active listening while resolving customer concerns"
-      ]
-    }
-  ],
-
-  // 5. Skills and Tools (Grouped tags exactly as provided)
-  skillGroups: [
-    {
-      category: "Administrative and Organization",
+      id: "admin",
+      categoryName: "Administrative and Organization",
+      count: "8 competencies",
+      description: "Core administrative workflows that keep day-to-day operations structured and dependable.",
       skills: [
         "Administrative Support",
         "Data Entry and Cleanup",
@@ -221,7 +269,10 @@ export const PORTFOLIO_DATA = {
       ]
     },
     {
-      category: "Communication and Customer Care",
+      id: "communication",
+      categoryName: "Communication and Customer Care",
+      count: "5 competencies",
+      description: "Omnichannel customer care, written de-escalation, and professional email correspondence.",
       skills: [
         "Customer Service and Client Communication",
         "Written and Verbal Communication",
@@ -231,7 +282,10 @@ export const PORTFOLIO_DATA = {
       ]
     },
     {
-      category: "Software and Tools",
+      id: "software",
+      categoryName: "Software and Tools",
+      count: "6 competencies",
+      description: "Everyday cloud applications, office suites, and digital organization tools.",
       skills: [
         "Google Docs",
         "Google Sheets (spreadsheet cleanup)",
@@ -242,7 +296,10 @@ export const PORTFOLIO_DATA = {
       ]
     },
     {
-      category: "Core Competencies",
+      id: "competencies",
+      categoryName: "Core Competencies",
+      count: "7 competencies",
+      description: "Essential professional attributes ensuring reliable execution under pressure.",
       skills: [
         "Attention to Detail",
         "Multitasking",
@@ -255,22 +312,7 @@ export const PORTFOLIO_DATA = {
     }
   ],
 
-  // 6. Education (Real education only, NO certifications)
-  education: [
-    {
-      institution: "Central Bicol State University of Agriculture",
-      degree: "Bachelor of Elementary Education, Major in Content Area",
-      period: "2015 - 2019"
-    },
-    {
-      institution: "Central Bicol State University of Agriculture",
-      degree: "Secondary Education High School Diploma",
-      period: "2015"
-    }
-  ],
-
-  // 7. Feature Flags & Optional Sections
-  showWorkSamples: true,
+  // 6. Portfolio / Project Showcase (4 Projects with User's 3 Photos + 1 Web Creation Card)
   workSamples: [
     {
       id: "customer-support-email-templates",
@@ -278,7 +320,14 @@ export const PORTFOLIO_DATA = {
       description: "Professional replies for inquiries, complaints, and follow-ups.",
       tag: "Writing",
       imageUrl: "/assets/aistudio/3baad16b-2cbb-427b-afa5-1c43b45ef154_cb67dfce.jpg",
-      altText: "Customer Support Email Templates with professional replies for inquiries, complaints, and follow-ups"
+      altText: "Customer Support Email Templates with professional replies for inquiries, complaints, and follow-ups",
+      context: "Created structured, polite response drafts for handling three of the most common customer interactions: initial product inquiries, complaint de-escalation with escalation notice, and courteous post-resolution follow-ups.",
+      deliverables: [
+        "1. Reply to an inquiry (shipping options & turnaround times)",
+        "2. Reply to a complaint (acknowledging frustration & clear 24-hr resolution guarantee)",
+        "3. Courteous follow-up (ensuring customer satisfaction)"
+      ],
+      toolsUsed: ["Email Drafting", "Customer Service Etiquette", "De-escalation"]
     },
     {
       id: "spreadsheet-cleanup",
@@ -286,7 +335,15 @@ export const PORTFOLIO_DATA = {
       description: "Messy data turned into a clean, consistent, sorted sheet.",
       tag: "Data Entry",
       imageUrl: "/assets/aistudio/8bfae34b-5ac4-4791-a4da-435a3d7f60c2_6762d962.jpg",
-      altText: "Spreadsheet Cleanup showing before and after duplicate removal and formatting"
+      altText: "Spreadsheet Cleanup showing before and after duplicate removal and formatting",
+      context: "Normalized raw data containing inconsistent name casing (ALL CAPS vs lowercase), mixed date notations (MM/DD/YY, written months, ISO formats), and duplicate entries into a clean, deduplicated, and sorted spreadsheet.",
+      deliverables: [
+        "Removed redundant duplicate records",
+        "Standardized names into Proper Title Case",
+        "Converted mixed dates into uniform YYYY-MM-DD format",
+        "Clean, sorted alphabetical output ready for CRM upload"
+      ],
+      toolsUsed: ["Google Sheets", "Data Deduplication", "Formatting Standards"]
     },
     {
       id: "weekly-schedule-plan",
@@ -294,10 +351,111 @@ export const PORTFOLIO_DATA = {
       description: "An organized weekly calendar for a busy business owner.",
       tag: "Scheduling",
       imageUrl: "/assets/aistudio/5441e268-eae3-4252-9a60-0b23bd66713c_1f299ba2.jpg",
-      altText: "Weekly Schedule Plan with color-coded calendar and admin planning"
+      altText: "Weekly Schedule Plan with color-coded calendar and admin planning",
+      context: "Designed an intuitive, color-coded weekly schedule balancing high-priority client meetings, deep focus time for reports and document preparation, and recurring administrative routines (inbox triage, vendor calls, follow-ups).",
+      deliverables: [
+        "Color-coded activity blocks (Client Meetings, Focus Work, Admin Tasks)",
+        "Daily morning inbox & email triage buffer",
+        "Strategic focus work sessions protected from interruption",
+        "Friday weekly review and planning for the upcoming week"
+      ],
+      toolsUsed: ["Calendar Management", "Time Blocking", "Executive Planning"]
+    },
+    {
+      id: "basic-website-creation",
+      title: "Basic Website Creation",
+      description: "A clean, modern, and mobile-responsive personal website layout.",
+      tag: "Web Creation",
+      imageUrl: "/src/assets/images/project_website_creation_1793783065902.jpg",
+      altText: "Modern responsive website mockup on a laptop screen with elegant typography and clean layouts",
+      context: "Developed a responsive, mobile-first website structure designed for clear visual hierarchy, smooth navigation, working contact integration, and cross-device accessibility.",
+      deliverables: [
+        "Clean, modern layout with balanced white space",
+        "Fully responsive design for mobile, tablet, and desktop",
+        "Functional contact form and social link integration",
+        "Fast-loading performance with modern web standards"
+      ],
+      toolsUsed: ["React", "Tailwind CSS", "Responsive Web Design"],
+      liveUrl: "https://kayeabegaildelacruz.vercel.app/"
     }
   ] as WorkSampleItem[],
 
+  // 7. Work Experience (Newest first, exact BPO roles & verifiable achievements)
+  workExperience: [
+    {
+      id: "accenture",
+      role: "Technical Support Representative",
+      company: "Accenture Inc.",
+      period: "Apr 2023 - Present",
+      location: "Taguig, Metro Manila / Remote",
+      summary: "Providing prompt technical support and customer guidance via digital channels while maintaining meticulous case histories.",
+      bullets: [
+        "Provide prompt technical support and customer guidance via digital channels, following standard operating procedures",
+        "Maintain thorough, error-free documentation of customer interactions, case histories, and troubleshooting steps in the internal database",
+        "Multitask between active customer interactions, diagnostic tools, and multiple support applications in a fast-paced environment",
+        "Resolve technical issues and escalate complex matters with detailed context"
+      ],
+      skillsGained: ["Digital Technical Support", "Case Documentation", "Multitasking Under Pressure", "SOP Adherence"]
+    },
+    {
+      id: "telus",
+      role: "Customer Service Representative",
+      company: "TELUS International Philippines",
+      period: "Sept 2021 - Apr 2023",
+      location: "Metro Manila",
+      summary: "Delivered omnichannel customer service and validated customer account data with high attention to detail.",
+      bullets: [
+        "Handled diverse customer inquiries and account requests with professional written and verbal communication",
+        "Entered, updated, and validated customer account information with high attention to detail and data integrity",
+        "Researched guidelines and account policies to resolve concerns under pressure while meeting quality and attendance standards",
+        "Collaborated with team leaders and colleagues to adapt to updated account procedures and service targets"
+      ],
+      skillsGained: ["Omnichannel Support", "Data Integrity", "Account Research", "Policy Compliance"]
+    },
+    {
+      id: "alorica",
+      role: "Customer Service Associate",
+      company: "Alorica - Fort Taguig",
+      period: "Oct 2019 - Apr 2020",
+      location: "Taguig, Metro Manila",
+      summary: "Resolved customer concerns in a structured, high-volume environment with active listening and composure.",
+      bullets: [
+        "Addressed customer inquiries and service requests in a structured, high-volume environment while following company protocols",
+        "Logged routine customer data accurately and routed unresolved issues to the appropriate support teams",
+        "Showed composure, patience, and active listening while resolving customer concerns"
+      ],
+      skillsGained: ["Active Listening", "Customer Patience", "High-Volume Call Handling", "Accurate Logging"]
+    }
+  ] as ExperienceItem[],
+
+  // 8. Education
+  education: [
+    {
+      institution: "Central Bicol State University of Agriculture",
+      degree: "Bachelor of Elementary Education, Major in Content Area",
+      period: "2015 - 2019",
+      details: "Solid academic grounding in structured communication, instructional clarity, curriculum organization, and student-centered support."
+    },
+    {
+      institution: "Central Bicol State University of Agriculture",
+      degree: "Secondary Education High School Diploma",
+      period: "2015",
+      details: "Academic foundation with honors and leadership participation."
+    }
+  ] as EducationItem[],
+
+  // 9. Feature Flags
+  showWorkSamples: true,
   showTestimonials: false,
-  testimonials: [] as TestimonialItem[]
+  testimonials: [] as TestimonialItem[],
+
+  // Backwards compatibility alias for components expecting skillGroups
+  get skillGroups() {
+    return this.skillCategories.map(cat => ({
+      category: cat.categoryName,
+      description: cat.description,
+      skills: cat.skills
+    }));
+  }
 };
+

@@ -1,6 +1,8 @@
 import React from 'react';
-import { GraduationCap, Languages, Download, Eye, CheckCircle2, FileText } from 'lucide-react';
+import { GraduationCap, Languages, Download, Eye, CheckCircle2 } from 'lucide-react';
+import { motion } from 'motion/react';
 import { PORTFOLIO_DATA } from '../data/portfolioData';
+import { WavyDivider } from './WavyDivider';
 
 interface EducationProps {
   onViewResumeClick: () => void;
@@ -10,141 +12,171 @@ export const Education: React.FC<EducationProps> = ({ onViewResumeClick }) => {
   const { education, personal } = PORTFOLIO_DATA;
 
   return (
-    <section id="education" className="py-20 bg-slate-50 dark:bg-slate-900/60 relative">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="education" className="pt-14 sm:pt-20 pb-0 bg-[#FAF5F0] relative overflow-hidden">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-14 sm:pb-20">
         
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-14">
-          <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-xs font-semibold bg-teal-100/80 dark:bg-teal-950/80 text-teal-800 dark:text-teal-300 mb-3">
-            <GraduationCap className="w-3.5 h-3.5" />
-            <span>Academic Background</span>
-          </div>
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">
-            Education & Resume
-          </h2>
-          <p className="mt-3 text-sm sm:text-base text-slate-600 dark:text-slate-300">
-            Educational foundation and official curriculum vitae for Kaye Abegail De La Cruz.
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-50px' }}
+          transition={{ duration: 0.6 }}
+          className="text-center max-w-2xl mx-auto mb-12 sm:mb-16"
+        >
+          <p className="text-[11px] sm:text-xs font-semibold tracking-[0.25em] text-[#C27A52] uppercase mb-2">
+            Academic Background
           </p>
-        </div>
+          <h2 className="text-3xl sm:text-4xl font-serif italic text-[#2D2522] tracking-tight">
+            Education & Language Fluency
+          </h2>
+          <div className="w-16 h-[2px] bg-[#C27A52]/40 mx-auto mt-3" />
+          <p className="mt-3 text-xs sm:text-sm text-[#5A4A42] leading-relaxed font-light">
+            Educational foundation and verified language credentials for Kaye Abegail De La Cruz.
+          </p>
+        </motion.div>
 
-        {/* Education & Language Grid */}
+        {/* 2-Column Grid: Formal Education Left, Languages & Terms Right */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch max-w-5xl mx-auto mb-12">
           
-          {/* Left Column: Education History */}
-          <div className="lg:col-span-7 p-7 sm:p-8 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm space-y-6">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-teal-50 dark:bg-teal-950 flex items-center justify-center text-teal-600 dark:text-teal-400">
-                <GraduationCap className="w-5 h-5" />
-              </div>
-              <div>
-                <h3 className="text-base font-bold text-slate-900 dark:text-white">
-                  Formal Education
-                </h3>
-                <span className="text-xs text-slate-400">Verified Academic Record</span>
-              </div>
-            </div>
-
-            <div className="space-y-6 pt-2">
-              {education.map((edu, idx) => (
-                <div
-                  key={idx}
-                  className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/80 dark:border-slate-700/60 space-y-1.5"
-                >
-                  <div className="flex items-center justify-between">
-                    <span className="px-2.5 py-0.5 text-[11px] font-bold rounded-md bg-teal-100 dark:bg-teal-900/60 text-teal-800 dark:text-teal-300">
-                      {edu.period}
-                    </span>
-                  </div>
-                  <h4 className="text-sm sm:text-base font-bold text-slate-900 dark:text-white pt-1">
-                    {edu.degree}
-                  </h4>
-                  <p className="text-xs font-semibold text-teal-700 dark:text-teal-400">
-                    {edu.institution}
-                  </p>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Right Column: Language Proficiency */}
-          <div className="lg:col-span-5 p-7 sm:p-8 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col justify-between">
+          {/* Left: Formal Education */}
+          <motion.div
+            initial={{ opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: '-50px' }}
+            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+            className="lg:col-span-7 p-7 sm:p-9 rounded-3xl bg-white border border-[#E8D9CD] shadow-sm space-y-6 flex flex-col justify-between"
+          >
             <div>
-              <div className="flex items-center gap-3 mb-6">
-                <div className="w-10 h-10 rounded-xl bg-indigo-50 dark:bg-indigo-950 flex items-center justify-center text-indigo-600 dark:text-indigo-400">
-                  <Languages className="w-5 h-5" />
+              <div className="flex items-center gap-3 mb-6 pb-4 border-b border-[#F2E5DC]">
+                <div className="w-10 h-10 rounded-xl bg-[#FAF5F0] flex items-center justify-center text-[#C27A52] border border-[#E8D9CD]">
+                  <GraduationCap className="w-5 h-5" />
                 </div>
                 <div>
-                  <h3 className="text-base font-bold text-slate-900 dark:text-white">
-                    Languages
+                  <h3 className="text-base sm:text-lg font-serif italic font-bold text-[#2D2522]">
+                    Formal Education
                   </h3>
-                  <span className="text-xs text-slate-400">Communication Fluency</span>
+                  <span className="text-[11px] tracking-wider uppercase text-[#C27A52] font-semibold">
+                    Academic Degree Record
+                  </span>
                 </div>
               </div>
 
               <div className="space-y-4">
-                {personal.languages.map((lang, lIdx) => (
-                  <div
-                    key={lIdx}
-                    className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/80 dark:border-slate-700/60 flex items-center justify-between"
+                {education.map((edu, idx) => (
+                  <motion.div
+                    key={idx}
+                    whileHover={{ y: -3 }}
+                    transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+                    className="p-5 rounded-2xl bg-[#FAF5F0] border border-[#E8D9CD] space-y-1.5"
                   >
-                    <div>
-                      <h4 className="text-sm font-bold text-slate-900 dark:text-white">
-                        {lang.name}
-                      </h4>
-                      <p className="text-xs text-slate-500 dark:text-slate-400 font-medium">
-                        {lang.level}
+                    <div className="flex items-center justify-between">
+                      <span className="px-2.5 py-0.5 text-[10px] tracking-wider uppercase font-bold rounded-md bg-[#E6BE85] text-[#2D2522]">
+                        {edu.period}
+                      </span>
+                    </div>
+                    <h4 className="text-sm sm:text-base font-serif italic font-bold text-[#2D2522] pt-1">
+                      {edu.degree}
+                    </h4>
+                    <p className="text-xs font-semibold text-[#C27A52]">
+                      {edu.institution}
+                    </p>
+                    {edu.details && (
+                      <p className="text-xs text-[#5A4A42] pt-1 leading-relaxed font-light">
+                        {edu.details}
                       </p>
-                    </div>
-                    <div className="p-1 rounded-full bg-emerald-100 dark:bg-emerald-950/80 text-emerald-600 dark:text-emerald-400">
-                      <CheckCircle2 className="w-4 h-4" />
-                    </div>
-                  </div>
+                    )}
+                  </motion.div>
                 ))}
               </div>
             </div>
 
-            <div className="pt-6 mt-6 border-t border-slate-100 dark:border-slate-800">
-              <span className="text-xs text-slate-500 dark:text-slate-400 block leading-relaxed">
-                Strong background in written and verbal communication, accurate documentation, and professional email correspondence.
-              </span>
+            <div className="pt-4 border-t border-[#F2E5DC] text-xs text-[#5A4A42] font-light">
+              Instructional clarity, organized record keeping, and patient communication skills.
             </div>
-          </div>
+          </motion.div>
 
-        </div>
+          {/* Right: Languages & Availability */}
+          <motion.div
+            initial={{ opacity: 0, x: 30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: '-50px' }}
+            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+            className="lg:col-span-5 p-7 sm:p-9 rounded-3xl bg-white border border-[#E8D9CD] shadow-sm flex flex-col justify-between"
+          >
+            <div>
+              <div className="flex items-center gap-3 mb-6 pb-4 border-b border-[#F2E5DC]">
+                <div className="w-10 h-10 rounded-xl bg-[#FAF5F0] flex items-center justify-center text-[#C27A52] border border-[#E8D9CD]">
+                  <Languages className="w-5 h-5" />
+                </div>
+                <div>
+                  <h3 className="text-base sm:text-lg font-serif italic font-bold text-[#2D2522]">
+                    Languages
+                  </h3>
+                  <span className="text-[11px] tracking-wider uppercase text-[#C27A52] font-semibold">
+                    Communication Fluency
+                  </span>
+                </div>
+              </div>
 
-        {/* View & Download Resume Banner */}
-        <div className="max-w-4xl mx-auto rounded-3xl p-7 sm:p-8 bg-gradient-to-r from-slate-900 via-slate-900 to-teal-950 text-white border border-slate-800 shadow-xl flex flex-col sm:flex-row items-center justify-between gap-6 text-center sm:text-left">
-          <div className="space-y-1">
-            <h3 className="text-lg sm:text-xl font-bold text-white">
-              Official Curriculum Vitae
-            </h3>
-            <p className="text-xs sm:text-sm text-slate-300 max-w-xl">
-              Preview Kaye's verified CV on-screen or download the official printable PDF document.
-            </p>
-          </div>
-          <div className="flex flex-wrap items-center justify-center sm:justify-end gap-3 shrink-0">
-            {/* View Resume Button */}
-            <button
-              onClick={onViewResumeClick}
-              className="inline-flex items-center gap-2 px-5 py-3 text-xs sm:text-sm font-bold text-white bg-slate-800 hover:bg-slate-700 border border-slate-700 rounded-xl shadow-sm transition-all cursor-pointer"
-            >
-              <Eye className="w-4 h-4 text-teal-400" />
-              <span>View CV Online</span>
-            </button>
+              <div className="space-y-3.5">
+                {personal.languages.map((lang, lIdx) => (
+                  <motion.div
+                    key={lIdx}
+                    whileHover={{ y: -2 }}
+                    transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+                    className="p-4 rounded-2xl bg-[#FAF5F0] border border-[#E8D9CD] flex items-center justify-between"
+                  >
+                    <div>
+                      <h4 className="text-sm font-serif italic font-bold text-[#2D2522]">
+                        {lang.name}
+                      </h4>
+                      <p className="text-xs text-[#5A4A42] font-light">
+                        {lang.level}
+                      </p>
+                    </div>
+                    <div className="p-1 rounded-full bg-white text-emerald-700 shadow-2xs border border-[#E8D9CD]">
+                      <CheckCircle2 className="w-4 h-4" />
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+            </div>
 
-            {/* Download Resume Button */}
-            <a
-              href={personal.resumeUrl}
-              download="Kaye_Abegail_De_La_Cruz_CV.pdf"
-              className="inline-flex items-center gap-2 px-5 py-3 text-xs sm:text-sm font-bold text-slate-950 bg-white hover:bg-slate-100 dark:bg-teal-400 dark:hover:bg-teal-300 rounded-xl shadow-md transition-all"
-            >
-              <Download className="w-4 h-4 text-teal-700 dark:text-slate-950" />
-              <span>Download PDF</span>
-            </a>
-          </div>
+            {/* Quick CV Action Banner with Spring Buttons */}
+            <div className="pt-6 mt-6 border-t border-[#F2E5DC] space-y-3">
+              <span className="text-xs text-[#5A4A42] block leading-relaxed font-light">
+                Verified curriculum vitae with complete employment history and academic documentation.
+              </span>
+              <div className="flex flex-wrap gap-2">
+                <motion.button
+                  whileHover={{ scale: 1.04 }}
+                  whileTap={{ scale: 0.96 }}
+                  onClick={onViewResumeClick}
+                  className="px-4 py-2 text-[10px] tracking-wider uppercase font-bold text-[#2D2522] bg-[#FAF5F0] hover:bg-[#EBD9CC] rounded-md border border-[#E8D9CD] flex items-center gap-1.5 cursor-pointer shadow-2xs"
+                >
+                  <Eye className="w-3.5 h-3.5 text-[#C27A52]" />
+                  <span>View CV</span>
+                </motion.button>
+                <motion.a
+                  whileHover={{ scale: 1.04 }}
+                  whileTap={{ scale: 0.96 }}
+                  href={personal.resumeUrl}
+                  download="Kaye_Abegail_De_La_Cruz_CV.pdf"
+                  className="px-4 py-2 text-[10px] tracking-wider uppercase font-bold text-[#2D2522] bg-[#E6BE85] hover:bg-[#D4A968] rounded-md shadow-xs flex items-center gap-1.5 cursor-pointer"
+                >
+                  <Download className="w-3.5 h-3.5" />
+                  <span>Download PDF</span>
+                </motion.a>
+              </div>
+            </div>
+          </motion.div>
+
         </div>
 
       </div>
+
+      {/* Deep Organic Wave flowing into Terracotta Work Samples Section */}
+      <WavyDivider fillColor="#C27A52" variant="deep-wave" />
     </section>
   );
 };

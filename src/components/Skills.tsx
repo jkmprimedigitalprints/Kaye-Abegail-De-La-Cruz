@@ -5,41 +5,41 @@ import {
   Laptop, 
   Sparkles, 
   Search,
-  CheckCircle2,
-  Tag
+  CheckCircle2
 } from 'lucide-react';
+import { motion, AnimatePresence } from 'motion/react';
 import { PORTFOLIO_DATA } from '../data/portfolioData';
+import { WavyDivider } from './WavyDivider';
 
 export const Skills: React.FC = () => {
-  const { skillGroups } = PORTFOLIO_DATA;
+  const { skillCategories } = PORTFOLIO_DATA;
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
 
-  // The 5 requested category buttons
   const categoryFilters = [
-    { id: 'All', label: 'All Categories' },
-    { id: 'Administrative and Organization', label: 'Administrative' },
-    { id: 'Communication and Customer Care', label: 'Communication' },
-    { id: 'Software and Tools', label: 'Software' },
-    { id: 'Core Competencies', label: 'Core' },
+    { id: 'All', label: 'ALL SKILLS' },
+    { id: 'admin', label: 'ADMINISTRATIVE' },
+    { id: 'communication', label: 'COMMUNICATION' },
+    { id: 'software', label: 'SOFTWARE' },
+    { id: 'competencies', label: 'CORE' },
   ];
 
-  const getCategoryIcon = (category: string) => {
-    switch (category) {
-      case 'Administrative and Organization':
-        return <FolderGit2 className="w-5 h-5 text-indigo-600 dark:text-indigo-400" />;
-      case 'Communication and Customer Care':
-        return <MessageSquare className="w-5 h-5 text-teal-600 dark:text-teal-400" />;
-      case 'Software and Tools':
-        return <Laptop className="w-5 h-5 text-sky-600 dark:text-sky-400" />;
-      case 'Core Competencies':
-        return <Sparkles className="w-5 h-5 text-amber-500" />;
+  const getCategoryIcon = (id: string) => {
+    switch (id) {
+      case 'admin':
+        return <FolderGit2 className="w-5 h-5 text-[#C27A52]" />;
+      case 'communication':
+        return <MessageSquare className="w-5 h-5 text-[#C27A52]" />;
+      case 'software':
+        return <Laptop className="w-5 h-5 text-[#C27A52]" />;
+      case 'competencies':
+        return <Sparkles className="w-5 h-5 text-[#C27A52]" />;
       default:
-        return <Tag className="w-5 h-5 text-teal-600 dark:text-teal-400" />;
+        return <CheckCircle2 className="w-5 h-5 text-[#C27A52]" />;
     }
   };
 
-  const filteredGroups = skillGroups.map((group) => {
+  const filteredCategories = skillCategories.map((group) => {
     const matchesSearch = group.skills.filter((skill) =>
       skill.toLowerCase().includes(searchQuery.toLowerCase())
     );
@@ -48,107 +48,141 @@ export const Skills: React.FC = () => {
       filteredSkills: matchesSearch,
     };
   }).filter((group) => {
-    if (selectedCategory !== 'All' && group.category !== selectedCategory) return false;
+    if (selectedCategory !== 'All' && group.id !== selectedCategory) return false;
     return group.filteredSkills.length > 0;
   });
 
   return (
-    <section id="skills" className="py-20 bg-white dark:bg-slate-950 relative">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="skills" className="pt-14 sm:pt-20 pb-0 bg-[#F7EFE9] relative overflow-hidden">
+      
+      {/* Ambient Organic Curve Accents */}
+      <div className="absolute top-1/3 -left-20 w-96 h-96 bg-white/60 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute bottom-10 -right-20 w-96 h-96 bg-[#E6BE85]/20 rounded-full blur-3xl pointer-events-none" />
+
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-14 sm:pb-20 relative z-10">
         
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-10">
-          <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-xs font-semibold bg-teal-50 dark:bg-teal-950/70 text-teal-700 dark:text-teal-300 border border-teal-200/60 dark:border-teal-800/60 mb-3">
-            <Tag className="w-3.5 h-3.5" />
-            <span>Abilities & Tool Stack</span>
-          </div>
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">
-            Skills & Tools
-          </h2>
-          <p className="mt-3 text-sm sm:text-base text-slate-600 dark:text-slate-300">
-            Grouped competencies developed through 4+ years of customer support, digital technical troubleshooting, and administrative execution.
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-50px' }}
+          transition={{ duration: 0.6 }}
+          className="text-center max-w-2xl mx-auto mb-12 sm:mb-16"
+        >
+          <p className="text-[11px] sm:text-xs font-semibold tracking-[0.25em] text-[#C27A52] uppercase mb-2">
+            Professional Stack
           </p>
-        </div>
+          <h2 className="text-3xl sm:text-4xl font-serif italic text-[#2D2522] tracking-tight">
+            Skills & Competencies
+          </h2>
+          <div className="w-16 h-[2px] bg-[#C27A52]/40 mx-auto mt-3" />
+          <p className="mt-3 text-xs sm:text-sm text-[#5A4A42] leading-relaxed font-light">
+            Core competencies refined through 5 years of customer service, technical support, spreadsheet management, and administrative coordination.
+          </p>
+        </motion.div>
 
-        {/* Search Bar */}
-        <div className="max-w-md mx-auto mb-8">
+        {/* Search & Category Filter Controls */}
+        <motion.div
+          initial={{ opacity: 0, y: 15 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          className="max-w-xl mx-auto mb-12 space-y-4"
+        >
+          {/* Search Bar */}
           <div className="relative">
-            <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+            <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#C27A52]" />
             <input
               type="text"
-              placeholder="Search skills, software, or competencies..."
+              placeholder="SEARCH COMPETENCY OR TOOL..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-9 pr-4 py-2.5 text-xs sm:text-sm rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 focus:outline-none focus:ring-2 focus:ring-teal-500 text-slate-800 dark:text-slate-200 shadow-2xs"
+              className="w-full pl-9 pr-4 py-2.5 text-xs bg-white text-[#2D2522] placeholder-[#7A6A62] border border-[#E8D9CD] rounded-lg focus:outline-none focus:ring-1 focus:ring-[#C27A52] tracking-wider uppercase shadow-2xs transition-shadow"
             />
           </div>
-        </div>
 
-        {/* 5 CATEGORY TABS - PERFECTLY ALIGNED IN ONE LINE */}
-        <div className="flex justify-center mb-12">
-          <div className="inline-flex items-center justify-center p-1.5 rounded-2xl bg-slate-100 dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 overflow-x-auto max-w-full shadow-2xs">
-            <div className="flex items-center gap-1 sm:gap-1.5">
-              {categoryFilters.map((tab) => {
-                const isActive = selectedCategory === tab.id;
-                return (
-                  <button
-                    key={tab.id}
-                    onClick={() => setSelectedCategory(tab.id)}
-                    className={`h-9 px-3.5 sm:px-5 text-xs sm:text-sm font-semibold rounded-xl whitespace-nowrap transition-all duration-200 flex items-center justify-center ${
-                      isActive
-                        ? 'bg-slate-900 text-white dark:bg-teal-600 dark:text-white shadow-sm'
-                        : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-white/60 dark:hover:bg-slate-800/60'
-                    }`}
-                  >
-                    {tab.label}
-                  </button>
-                );
-              })}
-            </div>
+          {/* Category Tabs */}
+          <div className="flex flex-wrap items-center justify-center gap-1.5">
+            {categoryFilters.map((tab) => {
+              const isActive = selectedCategory === tab.id;
+              return (
+                <motion.button
+                  key={tab.id}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={() => setSelectedCategory(tab.id)}
+                  className={`px-3.5 py-1.5 text-[10px] tracking-[0.15em] uppercase font-bold rounded-md transition-all cursor-pointer ${
+                    isActive
+                      ? 'bg-[#C27A52] text-white shadow-xs'
+                      : 'bg-[#F2E5DC] text-[#4A3B32] hover:bg-[#EBD9CC]'
+                  }`}
+                >
+                  {tab.label}
+                </motion.button>
+              );
+            })}
           </div>
-        </div>
+        </motion.div>
 
-        {/* 4 Skill Categories Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {filteredGroups.map((group) => (
-            <div
-              key={group.category}
-              className="p-7 rounded-3xl bg-slate-50/70 dark:bg-slate-900/60 border border-slate-200/90 dark:border-slate-800 shadow-xs flex flex-col justify-between"
-            >
-              <div>
-                {/* Header */}
-                <div className="flex items-center gap-3 mb-5">
-                  <div className="w-10 h-10 rounded-xl bg-white dark:bg-slate-800 flex items-center justify-center shadow-xs border border-slate-200/80 dark:border-slate-700/60">
-                    {getCategoryIcon(group.category)}
+        {/* 4 Grouped Skill Cards Grid with Staggered Motion */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
+          <AnimatePresence mode="popLayout">
+            {filteredCategories.map((group) => (
+              <motion.div
+                key={group.id}
+                layout
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.95 }}
+                whileHover={{ y: -6, boxShadow: '0 16px 24px -6px rgba(194, 122, 82, 0.1)' }}
+                transition={{ type: 'spring', stiffness: 300, damping: 22 }}
+                className="p-7 sm:p-8 rounded-3xl bg-white border border-[#E8D9CD] shadow-sm flex flex-col justify-between"
+              >
+                <div>
+                  {/* Header */}
+                  <div className="flex items-center justify-between pb-4 mb-4 border-b border-[#F2E5DC]">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-xl bg-[#F7EFE9] border border-[#E8D9CD] flex items-center justify-center shadow-2xs">
+                        {getCategoryIcon(group.id)}
+                      </div>
+                      <div>
+                        <h3 className="text-base sm:text-lg font-serif italic font-bold text-[#2D2522]">
+                          {group.categoryName}
+                        </h3>
+                        <span className="text-[11px] font-semibold tracking-wider uppercase text-[#C27A52]">
+                          {group.count || `${group.filteredSkills.length} competencies`}
+                        </span>
+                      </div>
+                    </div>
                   </div>
-                  <div>
-                    <h3 className="text-base font-bold text-slate-900 dark:text-white">
-                      {group.category}
-                    </h3>
-                    <span className="text-xs text-slate-400">
-                      {group.filteredSkills.length} competencies
-                    </span>
+
+                  <p className="text-xs text-[#5A4A42] mb-5 leading-relaxed font-light">
+                    {group.description}
+                  </p>
+
+                  {/* Exact Competency Items with Micro-Hovers */}
+                  <div className="flex flex-wrap gap-2">
+                    {group.filteredSkills.map((skill, sIdx) => (
+                      <motion.span
+                        key={sIdx}
+                        whileHover={{ scale: 1.04, y: -1 }}
+                        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-light bg-[#F7EFE9] text-[#2D2522] border border-[#E8D9CD] hover:border-[#C27A52] transition-colors cursor-default"
+                      >
+                        <CheckCircle2 className="w-3.5 h-3.5 text-[#C27A52] shrink-0" />
+                        <span>{skill}</span>
+                      </motion.span>
+                    ))}
                   </div>
                 </div>
-
-                {/* Skills Tags List */}
-                <div className="flex flex-wrap gap-2 pt-2">
-                  {group.filteredSkills.map((skill, sIdx) => (
-                    <span
-                      key={sIdx}
-                      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-medium bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-200 border border-slate-200/80 dark:border-slate-700/70 shadow-2xs hover:border-teal-500/60 hover:text-teal-700 dark:hover:text-teal-400 transition-colors"
-                    >
-                      <CheckCircle2 className="w-3.5 h-3.5 text-teal-600 dark:text-teal-400 shrink-0" />
-                      <span>{skill}</span>
-                    </span>
-                  ))}
-                </div>
-              </div>
-            </div>
-          ))}
+              </motion.div>
+            ))}
+          </AnimatePresence>
         </div>
 
       </div>
+
+      {/* Organic Wave flowing into Light Beige Education Section */}
+      <WavyDivider fillColor="#FAF5F0" variant="organic-swell" />
     </section>
   );
 };

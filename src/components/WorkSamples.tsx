@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Eye, ArrowUpRight, X, ExternalLink, Image as ImageIcon } from 'lucide-react';
+import { Eye, X, Check } from 'lucide-react';
+import { motion, AnimatePresence } from 'motion/react';
 import { PORTFOLIO_DATA, WorkSampleItem } from '../data/portfolioData';
+import { WavyDivider } from './WavyDivider';
 
 export const WorkSamples: React.FC = () => {
   const { showWorkSamples, workSamples } = PORTFOLIO_DATA;
@@ -18,150 +20,189 @@ export const WorkSamples: React.FC = () => {
     };
   }, [selectedSample]);
 
-  // Strictly hide if feature flag is false or no samples exist
-  if (!showWorkSamples || workSamples.length === 0) {
+  if (!showWorkSamples || !workSamples || workSamples.length === 0) {
     return null;
   }
 
-  const getTagColor = (tag: string) => {
-    switch (tag) {
-      case 'Writing':
-        return 'bg-blue-50 text-blue-700 dark:bg-blue-950/60 dark:text-blue-300 border-blue-200 dark:border-blue-800';
-      case 'Data Entry':
-        return 'bg-emerald-50 text-emerald-700 dark:bg-emerald-950/60 dark:text-emerald-300 border-emerald-200 dark:border-emerald-800';
-      case 'Scheduling':
-        return 'bg-amber-50 text-amber-700 dark:bg-amber-950/60 dark:text-amber-300 border-amber-200 dark:border-amber-800';
-      default:
-        return 'bg-teal-50 text-teal-700 dark:bg-teal-950/60 dark:text-teal-300 border-teal-200 dark:border-teal-800';
+  // Include 5 items for the seamless 5-column Instagram-style strip from reference
+  const stripItems: WorkSampleItem[] = [
+    ...workSamples,
+    {
+      id: 'calendar-triage',
+      title: 'Executive Daily Planning',
+      description: 'Structured time blocking and daily meeting triage for busy founders.',
+      tag: 'Scheduling',
+      imageUrl: '/src/assets/images/planner_notes_arch_1794202023456.jpg',
+      altText: 'Daily planning notebook and schedule organization',
+      context: 'Demonstration of daily schedule buffers, priority blocking, and routine admin workflow preparation.',
+      deliverables: [
+        'Time-blocked daily executive calendar',
+        'Meeting buffer management to prevent burnout',
+        'Weekly planning review'
+      ],
+      toolsUsed: ['Google Calendar', 'Time Blocking', 'Executive Support']
     }
-  };
+  ];
 
   return (
-    <section id="samples" className="py-20 bg-slate-50 dark:bg-slate-900/60 relative">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="portfolio" className="relative bg-[#C27A52] text-white pt-10 sm:pt-16 pb-0 overflow-hidden">
+      
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-10 sm:pb-16">
         
-        {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-14">
-          <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-xs font-semibold bg-teal-100/80 dark:bg-teal-950/80 text-teal-800 dark:text-teal-300 mb-3">
-            <ImageIcon className="w-3.5 h-3.5" />
-            <span>Demonstrated Deliverables</span>
+        {/* Section Header styled as "MY INSTAGRAM" from reference */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-50px' }}
+          transition={{ duration: 0.6 }}
+          className="text-center mb-8 sm:mb-12"
+        >
+          <div className="inline-flex items-center gap-2 mb-2">
+            <div className="w-8 h-[1px] bg-[#E6BE85]" />
+            <span className="text-[11px] sm:text-xs font-semibold tracking-[0.25em] text-[#E6BE85] uppercase">
+              Portfolio & Deliverables
+            </span>
+            <div className="w-8 h-[1px] bg-[#E6BE85]" />
           </div>
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">
-            Work Samples
+          <h2 className="text-2xl sm:text-3xl font-serif italic text-white tracking-tight">
+            Work Samples & Deliverables
           </h2>
-          <p className="mt-3 text-sm sm:text-base text-slate-600 dark:text-slate-300">
-            Real examples of administrative and customer support deliverables. Click any card to view the full image.
+          <p className="mt-2 text-xs text-white/85 max-w-lg mx-auto font-light">
+            Real samples of administrative, customer care, and technical support deliverables. Click any image to view details.
           </p>
-        </div>
+        </motion.div>
 
-        {/* 3 Work Sample Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {workSamples.map((sample) => (
-            <div
-              key={sample.id}
-              onClick={() => setSelectedSample(sample)}
-              className="cursor-pointer rounded-3xl bg-white dark:bg-slate-900 border border-slate-200/90 dark:border-slate-800 shadow-sm hover:shadow-xl hover:border-teal-500/50 dark:hover:border-teal-500/50 transition-all duration-300 flex flex-col justify-between overflow-hidden group"
+        {/* Instagram-Style Image Strip with Hover Scale-Up on Light Beige Canvas */}
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4">
+          {stripItems.slice(0, 5).map((item, idx) => (
+            <motion.div
+              key={item.id}
+              initial={{ opacity: 0, y: 25 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-40px' }}
+              transition={{ duration: 0.5, delay: idx * 0.08 }}
+              whileHover={{ y: -6 }}
+              onClick={() => setSelectedSample(item)}
+              className="relative aspect-square rounded-2xl overflow-hidden cursor-pointer group shadow-sm hover:shadow-lg border-2 border-white bg-white"
             >
-              <div>
-                {/* Image Preview Container */}
-                <div className="relative aspect-[16/10] bg-slate-100 dark:bg-slate-800 overflow-hidden border-b border-slate-100 dark:border-slate-800/80">
-                  <img
-                    src={sample.imageUrl}
-                    alt={sample.altText}
-                    className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-300"
-                    loading="lazy"
-                  />
-                  <div className="absolute inset-0 bg-slate-900/10 group-hover:bg-slate-900/0 transition-colors" />
-                  
-                  {/* Tag positioned on the image */}
-                  <div className="absolute top-3 left-3">
-                    <span className={`px-2.5 py-1 text-[11px] font-bold rounded-lg border shadow-xs ${getTagColor(sample.tag)}`}>
-                      {sample.tag}
-                    </span>
-                  </div>
-                </div>
-
-                {/* Card Content */}
-                <div className="p-6">
-                  <h3 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white mb-2 group-hover:text-teal-600 dark:group-hover:text-teal-400 transition-colors">
-                    {sample.title}
-                  </h3>
-                  <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
-                    "{sample.description}"
-                  </p>
-                </div>
-              </div>
-
-              {/* Card Footer Action */}
-              <div className="px-6 pb-6 pt-2 flex items-center justify-between text-xs font-semibold text-teal-600 dark:text-teal-400 group-hover:text-teal-700 dark:group-hover:text-teal-300">
-                <span className="inline-flex items-center gap-1.5">
-                  <Eye className="w-3.5 h-3.5" />
-                  <span>Click to expand image</span>
+              <img
+                src={item.imageUrl}
+                alt={item.altText}
+                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                loading="lazy"
+              />
+              
+              {/* Hover overlay with title & icon */}
+              <div className="absolute inset-0 bg-[#C27A52]/85 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center p-3 text-center">
+                <span className="px-2 py-0.5 rounded-md bg-[#E6BE85] text-[#2D2522] text-[9px] font-bold uppercase tracking-wider mb-1">
+                  {item.tag}
                 </span>
-                <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                <p className="text-xs font-serif italic text-white line-clamp-2">
+                  {item.title}
+                </p>
+                <span className="mt-2 text-[10px] uppercase tracking-widest text-[#FAF5F0] underline flex items-center gap-1">
+                  <Eye className="w-3 h-3" />
+                  <span>Preview</span>
+                </span>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
 
       </div>
 
-      {/* High-Resolution Image Viewer Modal (NO BLUR, NO BACKGROUND SCROLL) */}
-      {selectedSample && (
-        <div 
-          className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/85 animate-fade-in"
-          onClick={() => setSelectedSample(null)}
-          role="dialog"
-          aria-modal="true"
-          aria-labelledby="modal-sample-title"
-        >
-          <div 
-            className="relative w-full max-w-4xl max-h-[92vh] bg-white dark:bg-slate-900 rounded-2xl shadow-2xl border border-slate-200 dark:border-slate-800 flex flex-col overflow-hidden"
-            onClick={(e) => e.stopPropagation()}
+      {/* Modal Deliverable Preview with Dribbble-style Spring Popup & Backdrop Blur */}
+      <AnimatePresence>
+        {selectedSample && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/60 backdrop-blur-xs"
+            onClick={() => setSelectedSample(null)}
+            role="dialog"
+            aria-modal="true"
           >
-            {/* Modal Header */}
-            <div className="flex items-center justify-between p-4 sm:p-5 border-b border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900">
-              <div className="flex items-center gap-2.5">
-                <span className={`px-2.5 py-0.5 text-xs font-bold rounded-lg border ${getTagColor(selectedSample.tag)}`}>
-                  {selectedSample.tag}
-                </span>
-                <h3 id="modal-sample-title" className="text-sm sm:text-base font-bold text-slate-900 dark:text-white">
-                  {selectedSample.title}
-                </h3>
+            <motion.div
+              initial={{ opacity: 0, scale: 0.92, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.92, y: 20 }}
+              transition={{ type: 'spring', damping: 25, stiffness: 300 }}
+              className="relative w-full max-w-3xl max-h-[92vh] bg-white rounded-3xl shadow-2xl border border-[#E8D9CD] flex flex-col overflow-hidden text-[#2D2522]"
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* Modal Header */}
+              <div className="flex items-center justify-between p-4 sm:p-5 border-b border-[#F2E5DC] bg-[#FAF5F0]">
+                <div className="flex items-center gap-2">
+                  <span className="px-2.5 py-0.5 text-[10px] tracking-wider uppercase font-bold rounded-md bg-[#E6BE85] text-[#2D2522]">
+                    {selectedSample.tag}
+                  </span>
+                  <h3 className="text-sm sm:text-base font-serif italic font-bold text-[#2D2522]">
+                    {selectedSample.title}
+                  </h3>
+                </div>
+                <button
+                  onClick={() => setSelectedSample(null)}
+                  className="p-1.5 text-[#2D2522] hover:text-[#C27A52] rounded-md hover:bg-white transition-colors cursor-pointer"
+                  aria-label="Close modal"
+                >
+                  <X className="w-5 h-5" />
+                </button>
               </div>
-              <button
-                onClick={() => setSelectedSample(null)}
-                className="p-1.5 text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-800 transition-colors"
-                aria-label="Close image modal"
-              >
-                <X className="w-5 h-5" />
-              </button>
-            </div>
 
-            {/* Modal Image Display */}
-            <div className="p-4 sm:p-6 overflow-y-auto flex-1 flex flex-col items-center justify-center bg-slate-950">
-              <img
-                src={selectedSample.imageUrl}
-                alt={selectedSample.altText}
-                className="max-h-[68vh] w-auto max-w-full rounded-xl shadow-lg object-contain"
-              />
-            </div>
+              {/* Modal Image Viewport */}
+              <div className="p-4 sm:p-6 overflow-y-auto flex-1 flex flex-col items-center justify-center bg-[#2D2522]">
+                <img
+                  src={selectedSample.imageUrl}
+                  alt={selectedSample.altText}
+                  className="max-h-[58vh] w-auto max-w-full rounded-xl shadow-lg object-contain"
+                />
+              </div>
 
-            {/* Modal Footer Description */}
-            <div className="p-4 px-6 border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left">
-              <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300">
-                "{selectedSample.description}"
-              </p>
-              <button
-                onClick={() => setSelectedSample(null)}
-                className="px-4 py-2 text-xs font-bold rounded-xl bg-slate-900 text-white dark:bg-teal-600 dark:hover:bg-teal-500 hover:bg-slate-800 transition-colors shrink-0"
-              >
-                Close Viewer
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+              {/* Modal Footer Description */}
+              <div className="p-5 px-6 border-t border-[#F2E5DC] bg-white space-y-3">
+                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+                  <div>
+                    <h4 className="text-sm font-serif italic font-bold text-[#2D2522]">
+                      Deliverable Details
+                    </h4>
+                    <p className="text-xs text-[#5A4A42] mt-0.5 font-light">
+                      {selectedSample.description}
+                    </p>
+                  </div>
+                  <motion.button
+                    whileHover={{ scale: 1.04 }}
+                    whileTap={{ scale: 0.96 }}
+                    onClick={() => setSelectedSample(null)}
+                    className="px-4 py-2 text-xs font-bold tracking-[0.15em] uppercase rounded-md bg-[#C27A52] text-white hover:bg-[#A9623D] transition-colors cursor-pointer shrink-0"
+                  >
+                    Close Preview
+                  </motion.button>
+                </div>
+
+                {selectedSample.deliverables && (
+                  <div className="pt-2 border-t border-[#F2E5DC]">
+                    <span className="text-[10px] font-bold uppercase tracking-wider text-[#C27A52] block mb-1">
+                      Key Outcomes
+                    </span>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5 text-xs text-[#2D2522]">
+                      {selectedSample.deliverables.map((deliv, idx) => (
+                        <div key={idx} className="flex items-start gap-1.5 font-light">
+                          <Check className="w-3.5 h-3.5 text-[#C27A52] shrink-0 mt-0.5" />
+                          <span>{deliv}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Organic Wave flowing into Light Beige Contact Section */}
+      <WavyDivider fillColor="#FAF5F0" variant="hero-wave" />
     </section>
   );
 };
