@@ -105,10 +105,10 @@ export const Navbar: React.FC<NavbarProps> = ({ onViewResumeClick }) => {
               whileTap={{ scale: 0.96 }}
               onClick={onViewResumeClick}
               className="hidden md:inline-flex items-center gap-1.5 px-3 py-1.5 text-[10px] tracking-[0.15em] uppercase font-semibold text-[#2D2522] bg-[#F7EFE9] hover:bg-[#EBD9CC] rounded-md transition-all cursor-pointer border border-[#E8D9CD]"
-              title="Preview Kaye's Curriculum Vitae"
+              title="View Kaye's Official Curriculum Vitae"
             >
               <FileText className="w-3 h-3 text-[#C27A52]" />
-              <span>Resume</span>
+              <span>View CV</span>
             </motion.button>
 
             <motion.a

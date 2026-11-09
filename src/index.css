@@ -160,3 +160,34 @@ html.js [data-reveal="slide-right"].is-revealed {
     transition: none !important;
   }
 }
+
+/* =========================================================================
+   PRINT STYLES FOR OFFICIAL 1-PAGE CV
+   ========================================================================= */
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  #official-cv-printable-page,
+  #official-cv-printable-page * {
+    visibility: visible;
+  }
+  #official-cv-printable-page {
+    position: fixed;
+    inset: 0;
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+    padding: 15mm;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background: #ffffff;
+    z-index: 999999;
+    box-shadow: none !important;
+    border: none !important;
+    transform: none !important;
+  }
+}
+
+

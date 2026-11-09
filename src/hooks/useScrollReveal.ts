@@ -6,9 +6,10 @@ import { useEffect } from 'react';
  * 
  * Features:
  * - Plays strictly ONCE per element.
- * - Respects 'prefers-reduced-motion' (immediately reveals with zero animation if enabled).
- * - Supports custom delays via 'data-reveal-delay' or staggered indexes.
- * - Pure lightweight vanilla implementation with zero heavy dependencies.
+ * - Generous rootMargin (100px) so items smoothly animate in before or as user reaches them.
+ * - Immediate reveal check for above-the-fold or currently visible elements.
+ * - 1.2s safety fallback ensuring no image or card can ever remain hidden.
+ * - Respects 'prefers-reduced-motion'.
  */
 export function useScrollReveal() {
   useEffect(() => {
@@ -19,8 +20,7 @@ export function useScrollReveal() {
       '[data-reveal], .reveal-on-scroll, .reveal-card, .reveal-image'
     );
 
-    if (prefersReducedMotion) {
-      // Instantly reveal all elements without transitions
+    if (prefersReducedMotion || !('IntersectionObserver' in window)) {
       targets.forEach((el) => {
         el.classList.add('is-revealed');
       });
@@ -42,21 +42,55 @@ export function useScrollReveal() {
               el.classList.add('is-revealed');
             }
 
-            // Play ONLY ONCE per element
             obs.unobserve(el);
           }
         });
       },
       {
         root: null,
-        rootMargin: '0px 0px -60px 0px',
-        threshold: 0.08,
+        rootMargin: '120px 0px 120px 0px',
+        threshold: 0.01,
       }
     );
 
-    targets.forEach((el) => observer.observe(el));
+    const checkVisibleElements = () => {
+      targets.forEach((el) => {
+        if (!el.classList.contains('is-revealed')) {
+          const rect = el.getBoundingClientRect();
+          if (rect.top <= window.innerHeight + 200 && rect.bottom >= -200) {
+            const delay = el.dataset.revealDelay;
+            if (delay) {
+              setTimeout(() => {
+                el.classList.add('is-revealed');
+              }, parseInt(delay, 10));
+            } else {
+              el.classList.add('is-revealed');
+            }
+          }
+        }
+      });
+    };
+
+    targets.forEach((el) => {
+      observer.observe(el);
+    });
+
+    // Run immediate check
+    checkVisibleElements();
+
+    // Also attach scroll/resize listeners for rock-solid iframe reliability
+    window.addEventListener('scroll', checkVisibleElements, { passive: true });
+    window.addEventListener('resize', checkVisibleElements, { passive: true });
+
+    // Rapid safety fallback: reveal all elements so nothing can ever remain hidden
+    const safetyTimer = setTimeout(() => {
+      targets.forEach((el) => el.classList.add('is-revealed'));
+    }, 600);
 
     return () => {
+      clearTimeout(safetyTimer);
+      window.removeEventListener('scroll', checkVisibleElements);
+      window.removeEventListener('resize', checkVisibleElements);
       observer.disconnect();
     };
   }, []);

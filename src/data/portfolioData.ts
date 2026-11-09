@@ -69,10 +69,10 @@ export const PORTFOLIO_DATA = {
     location: "Taguig, Metro Manila, Philippines",
     experienceSummary: "5 years of proven BPO experience in Customer Service, Technical Support, Sales, and Collections (Accenture, TELUS International, Alorica), now providing high-touch Virtual Assistant and Administrative Support to busy business owners and remote teams.",
     bio: "Dedicated and detail-oriented professional with solid customer service and technical support experience, now offering virtual assistant and administrative support. Highly organized, computer literate, and adaptable, with a strong background in written and verbal communication, accurate documentation, and methodical problem-solving. Able to multitask under pressure and work independently or with a team in remote environments.",
-    email: "kayeabegaildelacruz02@gmail.com",
+    email: "jobaye2024@gmail.com",
     phone: "+63 9687605420",
-    avatarUrl: "/kaye-photo.jpg", // If present in /public/kaye-photo.jpg, will display automatically; else elegant monogram fallback
-    resumeUrl: "/Kaye_Abegail_De_La_Cruz_CV.pdf",
+    avatarUrl: "/kaye-photo.jpg",
+    resumeUrl: "/assets/aistudio/image_a02f68c0.png",
     calendlyUrl: "", // If empty, the 'Book a Call' button stays cleanly hidden
     rolesForTyping: [
       "General Virtual Assistant",

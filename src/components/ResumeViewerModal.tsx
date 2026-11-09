@@ -1,7 +1,6 @@
-import React, { useEffect } from 'react';
-import { X, Download, Printer, Mail, Phone, MapPin } from 'lucide-react';
+import React, { useState, useEffect, useRef } from 'react';
+import { X, Download, Printer, MapPin, Mail, Phone, ZoomIn, ZoomOut } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
-import { PORTFOLIO_DATA } from '../data/portfolioData';
 
 interface ResumeViewerModalProps {
   isOpen: boolean;
@@ -9,23 +8,78 @@ interface ResumeViewerModalProps {
 }
 
 export const ResumeViewerModal: React.FC<ResumeViewerModalProps> = ({ isOpen, onClose }) => {
-  const { personal, workExperience, education, skillCategories } = PORTFOLIO_DATA;
+  const [isZoomed, setIsZoomed] = useState(false);
+  const [scale, setScale] = useState(0.65);
+  const containerRef = useRef<HTMLDivElement>(null);
 
-  // Prevent background scrolling while modal is open
+  // Target A4 canvas dimensions
+  const docW = 750;
+  const docH = 1050;
+
+  // Fallback image path for direct download
+  const cvImagePath = '/assets/aistudio/image_a02f68c0.png';
+
+  // Calculate dynamic scale to ensure the CV fits 100% in 1 full page without scrolling or cropping
   useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = '';
+    if (!isOpen) {
+      setIsZoomed(false);
+      return;
     }
+
+    const updateScale = () => {
+      if (!containerRef.current) return;
+      const { clientWidth, clientHeight } = containerRef.current;
+      if (clientWidth <= 0 || clientHeight <= 0) return;
+
+      // Available area with comfortable breathing room padding
+      const padX = 20;
+      const padY = 20;
+      const availW = Math.max(260, clientWidth - padX);
+      const availH = Math.max(340, clientHeight - padY);
+
+      // Fit strictly within both width and height
+      const scaleW = availW / docW;
+      const scaleH = availH / docH;
+      const fitted = Math.min(scaleW, scaleH);
+
+      setScale(Math.max(0.3, Math.min(fitted, 1.15)));
+    };
+
+    updateScale();
+
+    // Use ResizeObserver for instant responsive auto-fit without lag or cropping
+    const ro = new ResizeObserver(updateScale);
+    if (containerRef.current) {
+      ro.observe(containerRef.current);
+    }
+
+    // Lock body scrolling while modal is open
+    document.body.style.overflow = 'hidden';
+
     return () => {
+      ro.disconnect();
       document.body.style.overflow = '';
     };
-  }, [isOpen]);
+  }, [isOpen, docW, docH]);
+
+  // Handle ESC key to close
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && isOpen) {
+        onClose();
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isOpen, onClose]);
 
   const handlePrint = () => {
     window.print();
   };
+
+  const activeScale = isZoomed ? 1.05 : scale;
+  const scaledWidth = isZoomed ? docW * 1.05 : docW * scale;
+  const scaledHeight = isZoomed ? docH * 1.05 : docH * scale;
 
   return (
     <AnimatePresence>
@@ -34,213 +88,316 @@ export const ResumeViewerModal: React.FC<ResumeViewerModalProps> = ({ isOpen, on
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/60 backdrop-blur-xs"
+          className="fixed inset-0 z-50 flex items-center justify-center p-1 sm:p-3 bg-black/85 backdrop-blur-sm"
           onClick={onClose}
           role="dialog"
           aria-modal="true"
           aria-labelledby="resume-title"
         >
           <motion.div
-            initial={{ opacity: 0, scale: 0.92, y: 20 }}
+            initial={{ opacity: 0, scale: 0.96, y: 10 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.92, y: 20 }}
-            transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-            className="relative w-full max-w-4xl max-h-[92vh] bg-white rounded-3xl shadow-2xl border border-[#E8D9CD] flex flex-col overflow-hidden text-[#2D2522]"
+            exit={{ opacity: 0, scale: 0.96, y: 10 }}
+            transition={{ type: 'spring', damping: 26, stiffness: 320 }}
+            className="relative w-full max-w-5xl h-[96vh] sm:h-[97vh] bg-[#1A1412] rounded-2xl shadow-2xl border border-white/10 flex flex-col overflow-hidden text-white"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Modal Top Control Bar */}
-            <div className="flex items-center justify-between px-5 sm:px-6 py-3.5 border-b border-[#F2E5DC] bg-[#FAF5F0]">
-              <div className="flex items-center gap-2">
-                <span className="w-2.5 h-2.5 rounded-full bg-[#C27A52] animate-pulse"></span>
-                <span id="resume-title" className="text-xs sm:text-sm font-serif italic font-bold text-[#2D2522]">
-                  Official Curriculum Vitae • {personal.fullName}
+            <div className="flex items-center justify-between px-3 sm:px-5 py-2.5 border-b border-white/10 bg-[#251D18] shrink-0 gap-2">
+              <div className="flex items-center gap-2 min-w-0">
+                <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 shrink-0 shadow-xs shadow-emerald-400/50" />
+                <span id="resume-title" className="text-xs sm:text-sm font-serif italic font-bold text-white truncate">
+                  Kaye Abegail De La Cruz — Curriculum Vitae
                 </span>
               </div>
-              <div className="flex items-center gap-2">
-                <motion.button
-                  whileHover={{ scale: 1.04 }}
-                  whileTap={{ scale: 0.96 }}
-                  onClick={handlePrint}
-                  className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 text-[10px] tracking-wider uppercase font-semibold rounded-md border border-[#E8D9CD] bg-white text-[#2D2522] hover:bg-[#F7EFE9] transition-colors cursor-pointer"
-                  title="Print document directly"
-                >
-                  <Printer className="w-3.5 h-3.5 text-[#C27A52]" />
-                  <span>Print</span>
-                </motion.button>
 
+              {/* Action Buttons */}
+              <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
+                {/* Zoom / Fit Toggle */}
+                <button
+                  type="button"
+                  onClick={() => setIsZoomed(!isZoomed)}
+                  className="inline-flex items-center gap-1 px-2.5 py-1 text-[10px] sm:text-[11px] font-semibold rounded-md border border-white/20 bg-white/10 hover:bg-white/20 text-white transition-colors cursor-pointer"
+                  title={isZoomed ? "Fit to Screen" : "Zoom In"}
+                >
+                  {isZoomed ? (
+                    <>
+                      <ZoomOut className="w-3.5 h-3.5 text-[#E6BE85]" />
+                      <span className="hidden sm:inline">Fit Screen</span>
+                    </>
+                  ) : (
+                    <>
+                      <ZoomIn className="w-3.5 h-3.5 text-[#E6BE85]" />
+                      <span className="hidden sm:inline">Zoom</span>
+                    </>
+                  )}
+                </button>
+
+                {/* Print Button */}
+                <button
+                  type="button"
+                  onClick={handlePrint}
+                  className="inline-flex items-center gap-1 px-2.5 py-1 text-[10px] sm:text-[11px] font-semibold rounded-md border border-white/20 bg-white/10 hover:bg-white/20 text-white transition-colors cursor-pointer"
+                  title="Print official CV"
+                >
+                  <Printer className="w-3.5 h-3.5 text-[#E6BE85]" />
+                  <span>Print</span>
+                </button>
+
+                {/* Download CV */}
                 <motion.a
-                  whileHover={{ scale: 1.04 }}
-                  whileTap={{ scale: 0.96 }}
-                  href={personal.resumeUrl}
-                  download="Kaye_Abegail_De_La_Cruz_CV.pdf"
-                  className="inline-flex items-center gap-1.5 px-3.5 py-1.5 text-[10px] tracking-wider uppercase font-bold text-[#2D2522] bg-[#E6BE85] hover:bg-[#D4A968] rounded-md shadow-xs transition-colors cursor-pointer"
+                  whileHover={{ scale: 1.03 }}
+                  whileTap={{ scale: 0.97 }}
+                  href={cvImagePath}
+                  download="Kaye_Abegail_De_La_Cruz_CV.png"
+                  className="inline-flex items-center gap-1.5 px-3 py-1 text-[10px] sm:text-[11px] font-bold tracking-wider uppercase text-[#2D2522] bg-[#E6BE85] hover:bg-[#D4A968] rounded-md shadow-xs transition-colors cursor-pointer"
                 >
                   <Download className="w-3.5 h-3.5" />
-                  <span>Download PDF</span>
+                  <span>Download CV</span>
                 </motion.a>
 
+                {/* Close Button */}
                 <button
                   onClick={onClose}
-                  className="p-1.5 text-[#2D2522] hover:text-[#C27A52] rounded-md hover:bg-white transition-colors ml-1 cursor-pointer"
-                  aria-label="Close resume viewer"
+                  className="p-1 text-white/70 hover:text-white hover:bg-white/10 rounded-md transition-colors cursor-pointer ml-1"
+                  aria-label="Close CV viewer"
                 >
                   <X className="w-5 h-5" />
                 </button>
               </div>
             </div>
 
-            {/* Scrollable Printable Document Body */}
-            <div className="overflow-y-auto p-6 sm:p-10 flex-1 bg-white text-[#2D2522]">
-              <div id="printable-resume" className="max-w-3xl mx-auto space-y-6">
-                
-                {/* CV Header */}
-                <div className="border-b border-[#F2E5DC] pb-6">
-                  <div className="flex flex-col sm:flex-row justify-between sm:items-end gap-4">
-                    <div>
-                      <h1 className="text-2xl sm:text-3xl font-serif font-bold tracking-tight text-[#2D2522]">
-                        {personal.fullName}
+            {/* Middle Preview Area: Perfectly Fitted, No Cropping, Razor-Sharp Vector Typography */}
+            <div
+              ref={containerRef}
+              className={`flex-1 min-h-0 w-full flex p-2 sm:p-3 bg-[#110D0B] ${
+                isZoomed
+                  ? 'overflow-auto justify-center items-start'
+                  : 'overflow-hidden justify-center items-center'
+              }`}
+            >
+              {/* Scaled Wrapper Box with exact calculated dimensions: Prevents cropping and centers cleanly */}
+              <div
+                style={{
+                  width: `${scaledWidth}px`,
+                  height: `${scaledHeight}px`,
+                  position: 'relative',
+                  overflow: 'hidden',
+                }}
+                className={`shadow-2xl rounded-sm bg-white shrink-0 ${isZoomed ? 'my-4' : 'm-auto'}`}
+              >
+                {/* 1-Page Official Document Canvas: Pure White Background, Perfect A4 Layout */}
+                <div
+                  id="official-cv-printable-page"
+                  style={{
+                    width: `${docW}px`,
+                    height: `${docH}px`,
+                    transform: `scale(${activeScale})`,
+                    transformOrigin: '0 0',
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif",
+                  }}
+                  className="bg-white text-black px-9 py-8 flex flex-col justify-between selection:bg-[#E6BE85] select-text"
+                >
+                  {/* Top Sections Flow */}
+                  <div>
+                    {/* Header: Clean, centered, matching uploaded reference */}
+                    <div className="text-center">
+                      <h1 className="text-[27px] font-black uppercase tracking-tight text-black leading-none mb-1.5">
+                        KAYE ABEGAIL DE LA CRUZ
                       </h1>
-                      <p className="text-sm font-serif italic text-[#C27A52] mt-1">
-                        {personal.title}
+                      <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-black mb-2.5">
+                        GENERAL VIRTUAL ASSISTANT / GENERAL ADMINISTRATIVE ASSISTANT
                       </p>
-                      <p className="text-xs text-[#5A4A42] mt-1 font-light italic">
-                        “{personal.tagline || 'Reliable, detail-oriented, and calm under pressure'}”
+                      <div className="flex items-center justify-center gap-3 text-[11px] font-medium text-black">
+                        <span className="inline-flex items-center gap-1.5">
+                          <MapPin className="w-3.5 h-3.5 text-black shrink-0" />
+                          <span>Taguig, Metro Manila, Philippines</span>
+                        </span>
+                        <span className="text-black/40">|</span>
+                        <span className="inline-flex items-center gap-1.5">
+                          <Mail className="w-3.5 h-3.5 text-black shrink-0" />
+                          <span>jobaye2024@gmail.com</span>
+                        </span>
+                        <span className="text-black/40">|</span>
+                        <span className="inline-flex items-center gap-1.5">
+                          <Phone className="w-3.5 h-3.5 text-black shrink-0" />
+                          <span>+63 9687605420</span>
+                        </span>
+                      </div>
+
+                      {/* Thick Solid Header Separator Line */}
+                      <div className="w-full h-[2.5px] bg-black mt-2.5" />
+                    </div>
+
+                    {/* Section 1: Professional Summary */}
+                    <div className="mt-3.5">
+                      <h2 className="text-[11.5px] font-extrabold uppercase tracking-wider text-black border-b-[1.5px] border-black pb-0.5 mb-1.5">
+                        PROFESSIONAL SUMMARY
+                      </h2>
+                      <p className="text-[10px] leading-[1.6] text-black text-justify font-normal">
+                        Dedicated and detail-oriented professional with over 4 years of solid customer service and technical support experience transitioning into a General Virtual Assistant and Administrative Support role. Highly organized, computer literate, and adaptable, with a strong background in written and verbal customer communication, accurate documentation, and methodical problem-solving. Proven ability to multitask effectively under pressure, manage administrative tasks with high attention to detail, and work independently or collaboratively in remote environments. Eager to apply transferable administrative and client support skills to maintain organized, efficient business operations.
                       </p>
                     </div>
-                    <div className="text-xs text-[#5A4A42] space-y-1 sm:text-right font-light">
-                      <div className="flex items-center sm:justify-end gap-1.5">
-                        <Mail className="w-3.5 h-3.5 text-[#C27A52]" />
-                        <span>{personal.email}</span>
-                      </div>
-                      <div className="flex items-center sm:justify-end gap-1.5">
-                        <Phone className="w-3.5 h-3.5 text-[#C27A52]" />
-                        <span>{personal.phone}</span>
-                      </div>
-                      <div className="flex items-center sm:justify-end gap-1.5">
-                        <MapPin className="w-3.5 h-3.5 text-[#C27A52]" />
-                        <span>{personal.location}</span>
+
+                    {/* Section 2: Core & Transferable Skills (2-Column Grid) */}
+                    <div className="mt-3.5">
+                      <h2 className="text-[11.5px] font-extrabold uppercase tracking-wider text-black border-b-[1.5px] border-black pb-0.5 mb-2">
+                        CORE & TRANSFERABLE SKILLS
+                      </h2>
+                      <div className="grid grid-cols-2 gap-x-6 gap-y-2 text-[9.5px] leading-relaxed text-black">
+                        {/* Left Column */}
+                        <div className="space-y-2">
+                          <div>
+                            <strong className="font-extrabold text-black block mb-0.5">
+                              ADMINISTRATIVE & ORGANIZATION:
+                            </strong>
+                            <span>
+                              Administrative Support • Data Entry & Cleanup • File & Document Organization • Google Drive Management • Calendar Coordination • Task Follow-up • Internet Research • Document Formatting
+                            </span>
+                          </div>
+                          <div>
+                            <strong className="font-extrabold text-black block mb-0.5">
+                              COMMUNICATION & CUSTOMER CARE:
+                            </strong>
+                            <span>
+                              Customer Service & Client Communication • Written & Verbal Communication • Inquiry & Concern Resolution • Accurate Ticket & Call Documentation • Professional Email Etiquette
+                            </span>
+                          </div>
+                        </div>
+
+                        {/* Right Column */}
+                        <div className="space-y-2">
+                          <div>
+                            <strong className="font-extrabold text-black block mb-0.5">
+                              COMPUTER & SOFTWARE TOOLS:
+                            </strong>
+                            <span>
+                              Basic Google Docs • Basic Google Sheets (Spreadsheet Cleanup) • Basic Email Communication & Drafting • Computer Literacy • Technical Troubleshooting • Digital File Filing
+                            </span>
+                          </div>
+                          <div>
+                            <strong className="font-extrabold text-black block mb-0.5">
+                              CORE COMPETENCIES:
+                            </strong>
+                            <span>
+                              Attention to Detail • Multitasking • Time Management • Working Under Pressure • Working Independently • Teamwork & Collaboration • Following Procedures
+                            </span>
+                          </div>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                </div>
 
-                {/* Professional Summary */}
-                <div className="space-y-2">
-                  <h2 className="text-[11px] font-bold uppercase tracking-widest text-[#C27A52]">
-                    Professional Profile
-                  </h2>
-                  <p className="text-xs sm:text-sm leading-relaxed text-[#5A4A42] font-light">
-                    {personal.bio}
-                  </p>
-                </div>
+                    {/* Section 3: Professional Work Experience */}
+                    <div className="mt-3.5">
+                      <h2 className="text-[11.5px] font-extrabold uppercase tracking-wider text-black border-b-[1.5px] border-black pb-0.5 mb-2">
+                        PROFESSIONAL WORK EXPERIENCE
+                      </h2>
+                      <div className="space-y-2.5">
+                        {/* Role 1: Accenture */}
+                        <div className="text-[9.5px]">
+                          <div className="flex items-center justify-between mb-0.5">
+                            <div>
+                              <span className="font-extrabold text-black">Technical Support Representative</span>
+                              <span className="text-black font-medium"> | Accenture Inc.</span>
+                            </div>
+                            <span className="font-bold text-black text-right shrink-0">
+                              Apr 2023 – Present
+                            </span>
+                          </div>
+                          <ul className="list-disc list-outside pl-4 space-y-0.5 text-black leading-relaxed">
+                            <li>Provide prompt technical support and customer guidance via digital channels, troubleshooting inquiries accurately while adhering to standard operating procedures.</li>
+                            <li>Maintain thorough, error-free documentation of customer interactions, case histories, and troubleshooting steps in the internal database for quick reference.</li>
+                            <li>Multitask efficiently between active customer interactions, diagnostic tools, and multiple support applications in a fast-paced environment.</li>
+                            <li>Demonstrate strong computer literacy and problem-solving skills to resolve technical issues and escalate complex matters with detailed context.</li>
+                          </ul>
+                        </div>
 
-                {/* Work Experience */}
-                <div className="space-y-4 pt-2">
-                  <h2 className="text-[11px] font-bold uppercase tracking-widest text-[#C27A52]">
-                    Work Experience (5 Years BPO History)
-                  </h2>
-                  <div className="space-y-5">
-                    {workExperience.map((job) => (
-                      <div key={job.id} className="text-xs sm:text-sm space-y-1.5">
-                        <div className="flex flex-col sm:flex-row sm:items-center justify-between">
-                          <span className="font-serif italic font-bold text-[#2D2522] text-sm">
-                            {job.role}
-                          </span>
-                          <span className="text-xs font-semibold text-[#C27A52]">
-                            {job.period}
+                        {/* Role 2: TELUS International */}
+                        <div className="text-[9.5px]">
+                          <div className="flex items-center justify-between mb-0.5">
+                            <div>
+                              <span className="font-extrabold text-black">Customer Service Representative</span>
+                              <span className="text-black font-medium"> | TELUS International Philippines</span>
+                            </div>
+                            <span className="font-bold text-black text-right shrink-0">
+                              Sept 2021 – Apr 2023
+                            </span>
+                          </div>
+                          <ul className="list-disc list-outside pl-4 space-y-0.5 text-black leading-relaxed">
+                            <li>Handled diverse customer inquiries and account requests with professional written and verbal communication, ensuring positive client experiences.</li>
+                            <li>Entered, updated, and validated customer account information and transaction records with high attention to detail and data integrity.</li>
+                            <li>Researched guidelines and account policies to resolve concerns under pressure while meeting strict quality and attendance standards.</li>
+                            <li>Collaborated with team leaders and colleagues to adapt to updated account procedures, workflow enhancements, and service targets.</li>
+                          </ul>
+                        </div>
+
+                        {/* Role 3: Alorica */}
+                        <div className="text-[9.5px]">
+                          <div className="flex items-center justify-between mb-0.5">
+                            <div>
+                              <span className="font-extrabold text-black">Customer Service Associate</span>
+                              <span className="text-black font-medium"> | Alorica – Fort Taguig</span>
+                            </div>
+                            <span className="font-bold text-black text-right shrink-0">
+                              Oct 2019 – Apr 2020
+                            </span>
+                          </div>
+                          <ul className="list-disc list-outside pl-4 space-y-0.5 text-black leading-relaxed">
+                            <li>Addressed customer inquiries and service requests in a structured, high-volume environment while strictly observing company protocols.</li>
+                            <li>Logged routine customer data accurately and routed unresolved account issues to appropriate support teams for timely follow-up.</li>
+                            <li>Demonstrated composure, patience, and active listening while resolving customer concerns and maintaining professional communication.</li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Section 4: Education */}
+                    <div className="mt-3.5">
+                      <h2 className="text-[11.5px] font-extrabold uppercase tracking-wider text-black border-b-[1.5px] border-black pb-0.5 mb-1.5">
+                        EDUCATION
+                      </h2>
+                      <div className="space-y-1 text-[9.5px]">
+                        <div className="flex items-baseline justify-between gap-2">
+                          <div className="truncate">
+                            <strong className="font-extrabold text-black">Central Bicol State University of Agriculture</strong>
+                            <span className="text-black font-medium"> — Bachelor of Elementary Education, Major in Content Area (Sta. Cruz, Ratay, Calabanga, Camarines Sur)</span>
+                          </div>
+                          <span className="font-bold text-black text-right shrink-0">
+                            2015–2019
                           </span>
                         </div>
-                        <p className="text-xs font-semibold text-[#5A4A42]">
-                          {job.company} {job.location ? `• ${job.location}` : ''}
-                        </p>
-                        <ul className="list-disc list-outside pl-4 space-y-1 text-xs text-[#5A4A42] pt-1 font-light">
-                          {job.bullets.map((b, idx) => (
-                            <li key={idx} className="leading-relaxed">
-                              {b}
-                            </li>
-                          ))}
-                        </ul>
+                        <div className="flex items-baseline justify-between gap-2">
+                          <div className="truncate">
+                            <strong className="font-extrabold text-black">Central Bicol State University of Agriculture</strong>
+                            <span className="text-black font-medium"> — Secondary Education High School Diploma (Sta. Cruz Poblacion, Calabanga, Camarines Sur)</span>
+                          </div>
+                          <span className="font-bold text-black text-right shrink-0">
+                            2015
+                          </span>
+                        </div>
                       </div>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Skills & Tools Summary - Exactly 4 Categories */}
-                <div className="space-y-3 pt-2">
-                  <h2 className="text-[11px] font-bold uppercase tracking-widest text-[#C27A52]">
-                    Key Skills & Competencies
-                  </h2>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
-                    {skillCategories.map((group, idx) => (
-                      <div key={idx} className="p-3.5 rounded-xl bg-[#FAF5F0] border border-[#E8D9CD]">
-                        <span className="font-bold text-[#2D2522] block mb-1">
-                          {group.categoryName} ({group.count})
-                        </span>
-                        <p className="text-[#5A4A42] leading-relaxed font-light">
-                          {group.skills.join(', ')}
-                        </p>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Education & Languages */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-3 border-t border-[#F2E5DC]">
-                  <div className="space-y-2">
-                    <h2 className="text-[11px] font-bold uppercase tracking-widest text-[#C27A52]">
-                      Education
-                    </h2>
-                    {education.map((edu, idx) => (
-                      <div key={idx} className="text-xs space-y-0.5">
-                        <p className="font-serif italic font-semibold text-[#2D2522]">{edu.degree}</p>
-                        <p className="text-[#5A4A42] font-light">{edu.institution} ({edu.period})</p>
-                      </div>
-                    ))}
+                    </div>
                   </div>
 
-                  <div className="space-y-2">
-                    <h2 className="text-[11px] font-bold uppercase tracking-widest text-[#C27A52]">
-                      Languages & Availability
-                    </h2>
-                    <div className="text-xs space-y-1 text-[#5A4A42] font-light">
-                      <p>
-                        <span className="font-semibold text-[#2D2522]">Languages:</span> English (Fluent), Tagalog (Native)
-                      </p>
-                      <p>
-                        <span className="font-semibold text-[#2D2522]">Shift:</span> Any (Day, Mid, or Night) • Flexible
-                      </p>
-                      <p>
-                        <span className="font-semibold text-[#2D2522]">Availability:</span> Ready to start immediately
-                      </p>
+                  {/* Section 5: Bottom 3-Column Meta (Pinned cleanly to bottom of the A4 page) */}
+                  <div className="grid grid-cols-3 gap-4 pt-2.5 border-t-[1.5px] border-black text-[9.5px] mt-4">
+                    <div>
+                      <strong className="font-extrabold text-black block mb-0.5">LANGUAGES</strong>
+                      <span className="text-black">English (Fluent) • Tagalog (Native)</span>
+                    </div>
+                    <div>
+                      <strong className="font-extrabold text-black block mb-0.5">PERSONAL DETAILS</strong>
+                      <span className="text-black">Filipino • Born June 02, 1998</span>
+                    </div>
+                    <div>
+                      <strong className="font-extrabold text-black block mb-0.5">REFERENCES</strong>
+                      <span className="text-black">Available upon request.</span>
                     </div>
                   </div>
                 </div>
-
-              </div>
-            </div>
-
-            {/* Modal Bottom Actions */}
-            <div className="flex items-center justify-between px-6 py-3.5 border-t border-[#F2E5DC] bg-[#FAF5F0]">
-              <span className="text-xs text-[#5A4A42] font-light">
-                Verified Curriculum Vitae • Ready to Download or Print
-              </span>
-              <div className="flex items-center gap-2">
-                <button
-                  onClick={onClose}
-                  className="px-4 py-2 text-xs font-semibold tracking-wider uppercase text-[#2D2522] hover:bg-white rounded-md transition-colors cursor-pointer"
-                >
-                  Close
-                </button>
-                <motion.a
-                  whileHover={{ scale: 1.04 }}
-                  whileTap={{ scale: 0.96 }}
-                  href={personal.resumeUrl}
-                  download="Kaye_Abegail_De_La_Cruz_CV.pdf"
-                  className="inline-flex items-center gap-1.5 px-4 py-2 text-xs font-bold tracking-wider uppercase text-[#2D2522] bg-[#E6BE85] hover:bg-[#D4A968] rounded-md shadow-xs transition-colors cursor-pointer"
-                >
-                  <Download className="w-3.5 h-3.5" />
-                  <span>Download PDF</span>
-                </motion.a>
               </div>
             </div>
           </motion.div>
