@@ -300,7 +300,7 @@ export const Contact: React.FC<ContactProps> = ({ selectedService }) => {
                     </>
                   ) : (
                     <>
-                      <span>Send Message (via FormSubmit)</span>
+                      <span>Send Message</span>
                       <Send className="w-3.5 h-3.5" />
                     </>
                   )}
