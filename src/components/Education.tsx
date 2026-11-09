@@ -152,7 +152,7 @@ export const Education: React.FC<EducationProps> = ({ onViewResumeClick }) => {
                   whileHover={{ scale: 1.04 }}
                   whileTap={{ scale: 0.96 }}
                   href={personal.resumeUrl}
-                  download="Kaye_Abegail_De_La_Cruz_CV.png"
+                  download="Kaye_Abegail_De_La_Cruz_CV.pdf"
                   className="px-4 py-2 text-[10px] tracking-wider uppercase font-bold text-[#2D2522] bg-[#E6BE85] hover:bg-[#D4A968] rounded-md shadow-xs flex items-center gap-1.5 cursor-pointer"
                 >
                   <Download className="w-3.5 h-3.5" />

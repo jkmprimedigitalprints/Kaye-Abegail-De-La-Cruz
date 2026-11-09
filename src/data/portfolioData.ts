@@ -72,7 +72,7 @@ export const PORTFOLIO_DATA = {
     email: "jobaye2024@gmail.com",
     phone: "+63 9687605420",
     avatarUrl: "/kaye-photo.jpg",
-    resumeUrl: "/assets/aistudio/image_a02f68c0.png",
+    resumeUrl: "/Kaye_Abegail_De_La_Cruz_CV.pdf",
     calendlyUrl: "", // If empty, the 'Book a Call' button stays cleanly hidden
     rolesForTyping: [
       "General Virtual Assistant",

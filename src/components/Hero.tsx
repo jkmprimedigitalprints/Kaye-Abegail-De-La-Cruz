@@ -12,6 +12,7 @@ interface HeroProps {
 export const Hero: React.FC<HeroProps> = ({ onHireMeClick, onViewResumeClick }) => {
   const { personal } = PORTFOLIO_DATA;
   const [copiedEmail, setCopiedEmail] = useState(false);
+  const [imageFailed, setImageFailed] = useState(false);
 
   const heroImage = '/images/kaye-photo.jpg';
 
@@ -62,21 +63,47 @@ export const Hero: React.FC<HeroProps> = ({ onHireMeClick, onViewResumeClick }) 
               >
                 
                 {/* Arch container */}
-                <div className="relative rounded-t-[150px] rounded-b-xl overflow-hidden aspect-[3/4] bg-[#FFE8E3] shadow-inner">
-                  <motion.img
-                    whileHover={{ scale: 1.06 }}
-                    transition={{ duration: 0.6, ease: 'easeOut' }}
-                    src={heroImage}
-                    alt={personal.fullName}
-                    className="w-full h-full object-cover object-top"
-                  />
+                <div className="relative rounded-t-[150px] rounded-b-xl overflow-hidden aspect-[3/4] bg-gradient-to-b from-[#FAF5F0] via-[#F7EFE9] to-[#EBD9CC] shadow-inner flex flex-col justify-between p-6">
+                  {!imageFailed ? (
+                    <motion.img
+                      whileHover={{ scale: 1.06 }}
+                      transition={{ duration: 0.6, ease: 'easeOut' }}
+                      src={heroImage}
+                      alt={personal.fullName}
+                      onError={() => setImageFailed(true)}
+                      className="absolute inset-0 w-full h-full object-cover object-top"
+                    />
+                  ) : (
+                    /* Pure Vector Arch Editorial Monogram Fallback */
+                    <div className="w-full h-full flex flex-col items-center justify-between text-center select-none py-2">
+                      <div className="w-10 h-10 rounded-full bg-white/80 border border-[#E8D9CD] flex items-center justify-center text-[#C27A52] shadow-xs">
+                        <Sparkles className="w-5 h-5 text-[#C27A52]" />
+                      </div>
+                      <div>
+                        <div className="w-24 h-24 rounded-full bg-white shadow-md border-2 border-[#E8D9CD] mx-auto flex items-center justify-center mb-3">
+                          <span className="text-3xl font-serif italic font-bold text-[#C27A52] tracking-tighter">
+                            KD
+                          </span>
+                        </div>
+                        <h3 className="text-base font-serif italic font-bold text-[#2D2522]">
+                          Kaye Abegail
+                        </h3>
+                        <p className="text-[10px] tracking-widest uppercase font-semibold text-[#C27A52] mt-0.5">
+                          General VA
+                        </p>
+                      </div>
+                      <div className="text-[10px] text-[#5A4A42] font-medium tracking-wide">
+                        5 Years BPO Background
+                      </div>
+                    </div>
+                  )}
 
                   {/* Available badge with pulsing dot */}
                   <motion.div
                     initial={{ opacity: 0, y: 15 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.6, duration: 0.5 }}
-                    className="absolute bottom-4 left-1/2 -translate-x-1/2 px-3.5 py-1 rounded-full bg-white text-[#2D2522] text-[10px] sm:text-[11px] font-semibold tracking-wider uppercase shadow-md flex items-center gap-1.5 whitespace-nowrap border border-[#E8D9CD]"
+                    className="absolute bottom-4 left-1/2 -translate-x-1/2 px-3.5 py-1 rounded-full bg-white text-[#2D2522] text-[10px] sm:text-[11px] font-semibold tracking-wider uppercase shadow-md flex items-center gap-1.5 whitespace-nowrap border border-[#E8D9CD] z-20"
                   >
                     <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
                     <span>Available for Work</span>

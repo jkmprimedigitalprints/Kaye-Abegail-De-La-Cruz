@@ -16,8 +16,8 @@ export const ResumeViewerModal: React.FC<ResumeViewerModalProps> = ({ isOpen, on
   const docW = 750;
   const docH = 1050;
 
-  // Fallback image path for direct download
-  const cvImagePath = '/assets/aistudio/image_a02f68c0.png';
+  // Official 1-page PDF file in public
+  const cvPdfPath = '/Kaye_Abegail_De_La_Cruz_CV.pdf';
 
   // Calculate dynamic scale to ensure the CV fits 100% in 1 full page without scrolling or cropping
   useEffect(() => {
@@ -144,12 +144,12 @@ export const ResumeViewerModal: React.FC<ResumeViewerModalProps> = ({ isOpen, on
                   <span>Print</span>
                 </button>
 
-                {/* Download CV */}
+                {/* Download CV (PDF) */}
                 <motion.a
                   whileHover={{ scale: 1.03 }}
                   whileTap={{ scale: 0.97 }}
-                  href={cvImagePath}
-                  download="Kaye_Abegail_De_La_Cruz_CV.png"
+                  href={cvPdfPath}
+                  download="Kaye_Abegail_De_La_Cruz_CV.pdf"
                   className="inline-flex items-center gap-1.5 px-3 py-1 text-[10px] sm:text-[11px] font-bold tracking-wider uppercase text-[#2D2522] bg-[#E6BE85] hover:bg-[#D4A968] rounded-md shadow-xs transition-colors cursor-pointer"
                 >
                   <Download className="w-3.5 h-3.5" />
