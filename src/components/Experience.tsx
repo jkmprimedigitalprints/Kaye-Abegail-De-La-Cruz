@@ -176,7 +176,6 @@ export const Experience: React.FC<ExperienceProps> = ({ onHireMeClick }) => {
                         src={visual.arch}
                         alt={visual.altArch}
                         className="w-full h-full object-cover"
-                        loading="lazy"
                       />
                     </div>
 
@@ -192,7 +191,6 @@ export const Experience: React.FC<ExperienceProps> = ({ onHireMeClick }) => {
                         src={visual.circle}
                         alt={visual.altCircle}
                         className="w-full h-full object-cover"
-                        loading="lazy"
                       />
                     </motion.div>
 

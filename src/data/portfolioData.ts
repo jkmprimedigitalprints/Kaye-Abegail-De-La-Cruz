@@ -319,7 +319,7 @@ export const PORTFOLIO_DATA = {
       title: "Customer Support Email Templates",
       description: "Professional replies for inquiries, complaints, and follow-ups.",
       tag: "Writing",
-      imageUrl: "/assets/aistudio/3baad16b-2cbb-427b-afa5-1c43b45ef154_cb67dfce.jpg",
+      imageUrl: "/images/work_sample_email_templates.jpg",
       altText: "Customer Support Email Templates with professional replies for inquiries, complaints, and follow-ups",
       context: "Created structured, polite response drafts for handling three of the most common customer interactions: initial product inquiries, complaint de-escalation with escalation notice, and courteous post-resolution follow-ups.",
       deliverables: [
@@ -334,7 +334,7 @@ export const PORTFOLIO_DATA = {
       title: "Spreadsheet Cleanup",
       description: "Messy data turned into a clean, consistent, sorted sheet.",
       tag: "Data Entry",
-      imageUrl: "/assets/aistudio/8bfae34b-5ac4-4791-a4da-435a3d7f60c2_6762d962.jpg",
+      imageUrl: "/images/work_sample_spreadsheet_cleanup.jpg",
       altText: "Spreadsheet Cleanup showing before and after duplicate removal and formatting",
       context: "Normalized raw data containing inconsistent name casing (ALL CAPS vs lowercase), mixed date notations (MM/DD/YY, written months, ISO formats), and duplicate entries into a clean, deduplicated, and sorted spreadsheet.",
       deliverables: [
@@ -350,7 +350,7 @@ export const PORTFOLIO_DATA = {
       title: "Weekly Schedule Plan",
       description: "An organized weekly calendar for a busy business owner.",
       tag: "Scheduling",
-      imageUrl: "/assets/aistudio/5441e268-eae3-4252-9a60-0b23bd66713c_1f299ba2.jpg",
+      imageUrl: "/images/work_sample_weekly_schedule.jpg",
       altText: "Weekly Schedule Plan with color-coded calendar and admin planning",
       context: "Designed an intuitive, color-coded weekly schedule balancing high-priority client meetings, deep focus time for reports and document preparation, and recurring administrative routines (inbox triage, vendor calls, follow-ups).",
       deliverables: [
@@ -366,7 +366,7 @@ export const PORTFOLIO_DATA = {
       title: "Basic Website Creation",
       description: "A clean, modern, and mobile-responsive personal website layout.",
       tag: "Web Creation",
-      imageUrl: "/src/assets/images/project_website_creation_1793783065902.jpg",
+      imageUrl: "/images/project_website_creation_1793783065902.jpg",
       altText: "Modern responsive website mockup on a laptop screen with elegant typography and clean layouts",
       context: "Developed a responsive, mobile-first website structure designed for clear visual hierarchy, smooth navigation, working contact integration, and cross-device accessibility.",
       deliverables: [

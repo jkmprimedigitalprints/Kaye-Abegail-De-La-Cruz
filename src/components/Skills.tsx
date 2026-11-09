@@ -167,7 +167,6 @@ export const Skills: React.FC = () => {
                       <img
                         src={catVisual.image}
                         alt={catVisual.alt}
-                        loading="lazy"
                         className="w-full h-full object-cover transition-transform duration-700 hover:scale-106"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/25 via-transparent to-transparent pointer-events-none" />

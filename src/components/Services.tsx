@@ -126,7 +126,6 @@ export const Services: React.FC<ServicesProps> = ({ onSelectService }) => {
                         src={visual.image}
                         alt={visual.alt}
                         className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-108"
-                        loading="lazy"
                       />
                       <div className="absolute inset-0 bg-[#C27A52]/10 group-hover:bg-transparent transition-colors duration-300" />
                       
