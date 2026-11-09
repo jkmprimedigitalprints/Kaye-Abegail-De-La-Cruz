@@ -57,14 +57,18 @@ export const Navbar: React.FC<NavbarProps> = ({ onViewResumeClick }) => {
       initial={{ y: -30, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-      className={`w-full bg-white transition-all duration-300 z-40 border-b border-[#E8D9CD] sticky top-0 ${
-        isScrolled ? 'shadow-md py-0 bg-white/95 backdrop-blur-md' : 'py-0'
+      className={`fixed top-0 left-0 right-0 w-full transition-all duration-300 z-50 border-b border-[#E8D9CD] ${
+        isScrolled
+          ? 'bg-white/95 backdrop-blur-md shadow-md'
+          : 'bg-white/98 backdrop-blur-xs shadow-xs'
       }`}
     >
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        {/* Top Header: Centered Logo Mark, Name & Subtitle as seen in reference image */}
-        <div className="py-4 sm:py-5 text-center relative">
+        {/* Top Header: Centered Logo Mark, Name & Subtitle */}
+        <div className={`transition-all duration-300 text-center relative ${
+          isScrolled ? 'py-2.5 sm:py-3.5' : 'py-3.5 sm:py-4.5'
+        }`}>
           <a
             href="#hero"
             onClick={(e) => handleNavClick(e, '#hero')}

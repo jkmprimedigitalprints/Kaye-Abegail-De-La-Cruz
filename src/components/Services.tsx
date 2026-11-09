@@ -12,16 +12,37 @@ export const Services: React.FC<ServicesProps> = ({ onSelectService }) => {
   const { services } = PORTFOLIO_DATA;
   const [showAllServices, setShowAllServices] = useState(false);
 
-  // Card top images matching warm lifestyle aesthetic
-  const cardImages = [
-    '/src/assets/images/planner_notes_arch_1794202023456.jpg',
-    '/src/assets/images/lifestyle_workspace_arch_1794201987416.jpg',
-    '/src/assets/images/coffee_latte_detail_1794202050074.jpg',
-    '/src/assets/images/hero_portrait_arch_1794201967070.jpg',
-    '/public/assets/aistudio/5441e268-eae3-4252-9a60-0b23bd66713c_1f299ba2.jpg',
-    '/public/assets/aistudio/8bfae34b-5ac4-4791-a4da-435a3d7f60c2_6762d962.jpg',
-    '/src/assets/images/project_website_creation_1793783065902.jpg',
-  ];
+  // Dedicated high-resolution royalty-free service images matching warm terracotta aesthetic
+  const serviceVisuals: Record<string, { image: string; alt: string }> = {
+    'general-va': {
+      image: '/images/service_general_va.jpg',
+      alt: 'Minimalist organized workstation with notepad, laptop and coffee for virtual assistant tasks',
+    },
+    'data-entry': {
+      image: '/images/service_data_entry.jpg',
+      alt: 'Structured spreadsheet records, data deduplication, and cleanup tables on screen',
+    },
+    'email-management': {
+      image: '/images/service_email_management.jpg',
+      alt: 'Organized email inbox triage, labeling, and customer drafting workspace',
+    },
+    'calendar-management': {
+      image: '/images/service_calendar_management.jpg',
+      alt: 'Time blocking scheduler and conflict-free calendar management planner',
+    },
+    'appointment-scheduling': {
+      image: '/images/service_appointment_scheduling.jpg',
+      alt: 'Consultation scheduling, meeting booking, and intake confirmation setup',
+    },
+    'document-organization': {
+      image: '/images/service_document_organization.jpg',
+      alt: 'Structured Google Drive folders, document filing, and SOP repository',
+    },
+    'website-creation': {
+      image: '/images/service_website_creation.jpg',
+      alt: 'Clean and modern mobile-responsive website layout and portfolio page',
+    },
+  };
 
   const displayedServices = showAllServices ? services : services.slice(0, 3);
 
@@ -54,12 +75,9 @@ export const Services: React.FC<ServicesProps> = ({ onSelectService }) => {
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-14 sm:pb-20">
         
         {/* Section Header matching "FAVORITES THIS MONTH" style from reference */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-60px' }}
-          transition={{ duration: 0.6 }}
-          className="text-center max-w-2xl mx-auto mb-12 sm:mb-16"
+        <div
+          data-reveal="fade-in"
+          className="reveal-on-scroll text-center max-w-2xl mx-auto mb-12 sm:mb-16"
         >
           <p className="text-[11px] sm:text-xs font-semibold tracking-[0.25em] text-[#C27A52] uppercase mb-2">
             Favorites This Month
@@ -71,7 +89,7 @@ export const Services: React.FC<ServicesProps> = ({ onSelectService }) => {
           <p className="mt-3 text-xs sm:text-sm text-[#5A4A42] leading-relaxed font-light">
             Reliable, organized virtual assistance designed to keep your business running smoothly, from daily schedule planning to accurate record keeping.
           </p>
-        </motion.div>
+        </div>
 
         {/* 3 "Favorites This Month" Light Beige Cards Row with Dribbble-style Spring Lift */}
         <motion.div
@@ -83,26 +101,30 @@ export const Services: React.FC<ServicesProps> = ({ onSelectService }) => {
         >
           <AnimatePresence mode="popLayout">
             {displayedServices.map((service, index) => {
-              const imageSrc = cardImages[index % cardImages.length];
+              const visual = serviceVisuals[service.id] || {
+                image: '/images/service_general_va.jpg',
+                alt: service.title,
+              };
 
               return (
                 <motion.div
                   key={service.id}
                   variants={cardVariants}
                   layout
+                  data-reveal-delay={(index % 3) * 120}
                   whileHover={{ 
                     y: -8, 
                     boxShadow: '0 20px 25px -5px rgba(194, 122, 82, 0.12), 0 8px 10px -6px rgba(194, 122, 82, 0.08)' 
                   }}
                   transition={{ type: 'spring', stiffness: 300, damping: 22 }}
-                  className="rounded-2xl bg-white overflow-hidden shadow-sm flex flex-col justify-between border border-[#E8D9CD] group"
+                  className="reveal-card rounded-2xl bg-white overflow-hidden shadow-sm flex flex-col justify-between border border-[#E8D9CD] group"
                 >
                   <div>
                     {/* Image Top */}
                     <div className="relative aspect-[16/11] overflow-hidden bg-[#F7EFE9]">
-                      <motion.img
-                        src={imageSrc}
-                        alt={service.title}
+                      <img
+                        src={visual.image}
+                        alt={visual.alt}
                         className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-108"
                         loading="lazy"
                       />

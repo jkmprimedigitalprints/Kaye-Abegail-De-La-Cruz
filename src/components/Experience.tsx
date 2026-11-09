@@ -14,22 +14,22 @@ export const Experience: React.FC<ExperienceProps> = ({ onHireMeClick }) => {
   // Custom curated visual assets for each alternating arch & circular photo
   const visuals = [
     {
-      arch: '/src/assets/images/lifestyle_workspace_arch_1794201987416.jpg',
-      circle: '/src/assets/images/coffee_latte_detail_1794202050074.jpg',
-      altArch: 'Organized modern workstation setup with laptop and plants',
+      arch: '/images/skills_software_tools.jpg',
+      circle: '/images/coffee_latte_detail_1794202050074.jpg',
+      altArch: 'Technical support diagnostic tools and dual-screen computer workstation',
       altCircle: 'Cozy artisan morning coffee cup with latte art',
     },
     {
-      arch: '/src/assets/images/planner_notes_arch_1794202023456.jpg',
-      circle: '/src/assets/images/project_website_creation_1793783065902.jpg',
-      altArch: 'Hands writing in a daily schedule planner',
+      arch: '/images/customer_care_headset_station.jpg',
+      circle: '/images/project_website_creation_1793783065902.jpg',
+      altArch: 'Customer care professional communication station with headset and laptop',
       altCircle: 'Responsive digital website layout',
     },
     {
-      arch: '/src/assets/images/hero_portrait_arch_1794201967070.jpg',
-      circle: '/src/assets/images/coffee_latte_detail_1794202050074.jpg',
-      altArch: 'Warm professional portrait',
-      altCircle: 'Artisan coffee detail',
+      arch: '/images/skills_admin_organization.jpg',
+      circle: '/images/planner_notes_arch_1794202023456.jpg',
+      altArch: 'Structured administrative documentation, task folders and filing workspace',
+      altCircle: 'Daily planner schedule note',
     },
   ];
 
@@ -54,12 +54,9 @@ export const Experience: React.FC<ExperienceProps> = ({ onHireMeClick }) => {
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-14 sm:pb-24 relative z-10">
         
         {/* Section Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-60px' }}
-          transition={{ duration: 0.6 }}
-          className="text-center max-w-2xl mx-auto mb-16 sm:mb-20"
+        <div
+          data-reveal="fade-in"
+          className="reveal-on-scroll text-center max-w-2xl mx-auto mb-16 sm:mb-20"
         >
           <p className="text-[11px] sm:text-xs font-semibold tracking-[0.25em] text-[#C27A52] uppercase mb-2">
             Career Journey
@@ -71,7 +68,7 @@ export const Experience: React.FC<ExperienceProps> = ({ onHireMeClick }) => {
           <p className="mt-3 text-xs sm:text-sm text-[#5A4A42] leading-relaxed font-light">
             5 years of verified corporate customer service and technical support background across three industry-leading BPO organizations.
           </p>
-        </motion.div>
+        </div>
 
         {/* Alternating Content Boxes: White Card Overlapping Arch Image */}
         <div className="space-y-20 sm:space-y-28">

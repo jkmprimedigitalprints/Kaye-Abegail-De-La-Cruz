@@ -1,116 +1,133 @@
 @import "tailwindcss";
 
-@theme {
-  --color-terracotta: #C27A52;
-  --color-terracotta-dark: #A9623D;
-  --color-blush: #FFE8E3;
-  --color-blush-light: #FFF4F1;
-  --color-softpink: #F2C4BC;
-  --color-sand: #E6BE85;
-  --color-sand-light: #F1D4AA;
-  --color-sand-dark: #D4A968;
-  --color-cream: #FFFFFF;
-  --color-darkbrown: #4A2E24;
-  --color-darkbrown-muted: #6B493D;
-  
-  --font-serif: 'Playfair Display', Georgia, serif;
-  --font-sans: 'Montserrat', 'Poppins', sans-serif;
+/* =========================================================================
+   HIDE SCROLLBARS GLOBALLY (Maintains Full Scrolling Functionality)
+   ========================================================================= */
+
+/* WebKit browsers: Chrome, Safari, Edge, Opera */
+*::-webkit-scrollbar,
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+  background: transparent !important;
 }
 
-@layer base {
-  html {
-    scroll-behavior: smooth;
-    scroll-padding-top: 4.5rem;
-  }
-  
-  body {
-    font-family: var(--font-sans);
-    color: #2D2522;
-    background-color: #FFFFFF;
-    width: 100%;
-    overflow-x: hidden;
-  }
+/* Firefox, IE 10+, Legacy Edge */
+*,
+html,
+body {
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
+}
 
-  h1, h2, h3, h4, .font-serif {
-    font-family: var(--font-serif);
-  }
+/* Smooth scroll behavior */
+html {
+  scroll-behavior: smooth;
+}
 
-  ::selection {
-    background-color: #C27A52;
-    color: #FFFFFF;
+/* Scroll margin top so fixed navbar does not cover sections when navigating */
+section[id] {
+  scroll-margin-top: 110px;
+}
+
+@media (min-width: 768px) {
+  section[id] {
+    scroll-margin-top: 130px;
   }
 }
 
-/* Hide scrollbar on landing page across all browsers */
-html, body {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-}
-::-webkit-scrollbar {
-  display: none;
+/* =========================================================================
+   SCROLL REVEAL ANIMATIONS (Intersection Observer Powered)
+   ========================================================================= */
+
+.reveal-on-scroll {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
 }
 
-/* Floating animation for arch images */
-@keyframes gentle-float {
-  0%, 100% {
-    transform: translateY(0px);
-  }
-  50% {
-    transform: translateY(-8px);
-  }
+.reveal-on-scroll.is-revealed {
+  opacity: 1;
+  transform: translateY(0);
 }
 
-.animate-gentle-float {
-  animation: gentle-float 7s ease-in-out infinite;
+.reveal-card {
+  opacity: 0;
+  transform: translateY(24px) scale(0.98);
+  transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1), transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
 }
 
-/* Horizontal gentle wave movement */
-@keyframes wave-shift {
-  0% {
-    transform: translateX(0);
-  }
-  100% {
-    transform: translateX(-2%);
-  }
+.reveal-card.is-revealed {
+  opacity: 1;
+  transform: translateY(0) scale(1);
 }
 
-.animate-wave {
-  animation: wave-shift 10s ease-in-out infinite alternate;
+.reveal-image {
+  opacity: 0;
+  transform: scale(0.96);
+  transition: opacity 0.8s ease-out, transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
 }
 
-/* Arch mask shape */
-.arch-mask {
-  border-top-left-radius: 9999px;
-  border-top-right-radius: 9999px;
+.reveal-image.is-revealed {
+  opacity: 1;
+  transform: scale(1);
 }
 
-/* Respect reduced motion */
+[data-reveal="fade-in"] {
+  opacity: 0;
+  transition: opacity 0.6s ease-out;
+  will-change: opacity;
+}
+
+[data-reveal="fade-in"].is-revealed {
+  opacity: 1;
+}
+
+[data-reveal="slide-left"] {
+  opacity: 0;
+  transform: translateX(-30px);
+  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+[data-reveal="slide-left"].is-revealed {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+[data-reveal="slide-right"] {
+  opacity: 0;
+  transform: translateX(30px);
+  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+[data-reveal="slide-right"].is-revealed {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* =========================================================================
+   ACCESSIBILITY: PREFERS-REDUCED-MOTION
+   ========================================================================= */
 @media (prefers-reduced-motion: reduce) {
-  *,
-  ::before,
-  ::after {
-    animation-duration: 0.01ms !important;
+  *, ::before, ::after {
+    animation-duration: 0.001ms !important;
     animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
+    transition-duration: 0.001ms !important;
     scroll-behavior: auto !important;
   }
-}
-
-@media print {
-  body * {
-    visibility: hidden;
-  }
-  #printable-resume, #printable-resume * {
-    visibility: visible;
-  }
-  #printable-resume {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    margin: 0;
-    padding: 20px;
-    background: white !important;
-    color: black !important;
+  .reveal-on-scroll,
+  .reveal-card,
+  .reveal-image,
+  [data-reveal] {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
   }
 }

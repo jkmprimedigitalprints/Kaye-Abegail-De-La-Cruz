@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { ScrollProgressBar } from './components/ScrollProgressBar';
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
 import { Services } from './components/Services';
@@ -11,8 +10,12 @@ import { WorkSamples } from './components/WorkSamples';
 import { Contact } from './components/Contact';
 import { Footer } from './components/Footer';
 import { ResumeViewerModal } from './components/ResumeViewerModal';
+import { useScrollReveal } from './hooks/useScrollReveal';
 
 export default function App() {
+  // Activate native Intersection Observer scroll reveal animations
+  useScrollReveal();
+
   // Resume Viewer Modal State
   const [isResumeViewerOpen, setIsResumeViewerOpen] = useState(false);
 
@@ -37,13 +40,13 @@ export default function App() {
   return (
     <div className="min-h-screen w-full bg-white font-sans overflow-x-hidden">
       
-      {/* Smooth reading progress bar on scroll */}
-      <ScrollProgressBar />
-
-      {/* Centered Top Header & Navigation with Arch Portfolio Logo */}
+      {/* Fixed Top Header & Navigation with Arch Portfolio Logo */}
       <Navbar
         onViewResumeClick={() => setIsResumeViewerOpen(true)}
       />
+
+      {/* Spacer to prevent fixed navbar from obscuring top hero content */}
+      <div className="h-[105px] sm:h-[125px] md:h-[145px]" aria-hidden="true" />
 
       {/* Main Content Sections with Organic Flowing Wave Dividers */}
       <main className="w-full overflow-hidden">

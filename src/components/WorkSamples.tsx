@@ -24,16 +24,79 @@ export const WorkSamples: React.FC = () => {
     return null;
   }
 
-  // Include 5 items for the seamless 5-column Instagram-style strip from reference
+  // Include 5 items for the seamless 5-column Instagram-style strip
   const stripItems: WorkSampleItem[] = [
-    ...workSamples,
+    {
+      id: 'customer-support-email-templates',
+      title: 'Customer Support Email Templates',
+      description: 'Professional replies for inquiries, complaints, and follow-ups.',
+      tag: 'Writing',
+      imageUrl: '/images/service_email_management.jpg',
+      altText: 'Customer Support Email Templates with professional customer service drafting',
+      context: 'Created structured, polite response drafts for handling three of the most common customer interactions: initial product inquiries, complaint de-escalation with escalation notice, and courteous post-resolution follow-ups.',
+      deliverables: [
+        '1. Reply to an inquiry (shipping options & turnaround times)',
+        '2. Reply to a complaint (acknowledging frustration & clear 24-hr resolution guarantee)',
+        '3. Courteous follow-up (ensuring customer satisfaction)'
+      ],
+      toolsUsed: ['Email Drafting', 'Customer Service Etiquette', 'De-escalation']
+    },
+    {
+      id: 'spreadsheet-cleanup',
+      title: 'Spreadsheet Cleanup',
+      description: 'Messy data turned into a clean, consistent, sorted sheet.',
+      tag: 'Data Entry',
+      imageUrl: '/images/service_data_entry.jpg',
+      altText: 'Spreadsheet Cleanup showing duplicate removal, formatting standardization, and sorted data',
+      context: 'Normalized raw data containing inconsistent name casing, mixed date notations, and duplicate entries into a clean, deduplicated, and sorted spreadsheet.',
+      deliverables: [
+        'Removed redundant duplicate records',
+        'Standardized names into Proper Title Case',
+        'Converted mixed dates into uniform YYYY-MM-DD format',
+        'Clean, sorted alphabetical output ready for CRM upload'
+      ],
+      toolsUsed: ['Google Sheets', 'Data Deduplication', 'Formatting Standards']
+    },
+    {
+      id: 'weekly-schedule-plan',
+      title: 'Weekly Schedule Plan',
+      description: 'An organized weekly calendar for a busy business owner.',
+      tag: 'Scheduling',
+      imageUrl: '/images/service_calendar_management.jpg',
+      altText: 'Weekly Schedule Plan with color-coded calendar and administrative time blocking',
+      context: 'Designed an intuitive, color-coded weekly schedule balancing high-priority client meetings, deep focus time for reports, and recurring admin routines.',
+      deliverables: [
+        'Color-coded activity blocks (Client Meetings, Focus Work, Admin Tasks)',
+        'Daily morning inbox & email triage buffer',
+        'Strategic focus work sessions protected from interruption',
+        'Friday weekly review and planning for the upcoming week'
+      ],
+      toolsUsed: ['Calendar Management', 'Time Blocking', 'Executive Planning']
+    },
+    {
+      id: 'basic-website-creation',
+      title: 'Basic Website Creation',
+      description: 'A clean, modern, and mobile-responsive personal website layout.',
+      tag: 'Web Creation',
+      imageUrl: '/images/project_website_creation_1793783065902.jpg',
+      altText: 'Modern responsive website mockup on screen with clean typography and balanced layout',
+      context: 'Developed a responsive, mobile-first website structure designed for clear visual hierarchy, smooth navigation, working contact integration, and cross-device accessibility.',
+      deliverables: [
+        'Clean, modern layout with balanced white space',
+        'Fully responsive design for mobile, tablet, and desktop',
+        'Functional contact form and social link integration',
+        'Fast-loading performance with modern web standards'
+      ],
+      toolsUsed: ['React', 'Tailwind CSS', 'Responsive Web Design'],
+      liveUrl: 'https://kayeabegaildelacruz.vercel.app/'
+    },
     {
       id: 'calendar-triage',
       title: 'Executive Daily Planning',
       description: 'Structured time blocking and daily meeting triage for busy founders.',
       tag: 'Scheduling',
-      imageUrl: '/src/assets/images/planner_notes_arch_1794202023456.jpg',
-      altText: 'Daily planning notebook and schedule organization',
+      imageUrl: '/images/planner_notes_arch_1794202023456.jpg',
+      altText: 'Daily planning notebook and schedule organization notes',
       context: 'Demonstration of daily schedule buffers, priority blocking, and routine admin workflow preparation.',
       deliverables: [
         'Time-blocked daily executive calendar',
@@ -50,12 +113,9 @@ export const WorkSamples: React.FC = () => {
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-10 sm:pb-16">
         
         {/* Section Header styled as "MY INSTAGRAM" from reference */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-50px' }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-8 sm:mb-12"
+        <div
+          data-reveal="fade-in"
+          className="reveal-on-scroll text-center mb-8 sm:mb-12"
         >
           <div className="inline-flex items-center gap-2 mb-2">
             <div className="w-8 h-[1px] bg-[#E6BE85]" />
@@ -70,20 +130,17 @@ export const WorkSamples: React.FC = () => {
           <p className="mt-2 text-xs text-white/85 max-w-lg mx-auto font-light">
             Real samples of administrative, customer care, and technical support deliverables. Click any image to view details.
           </p>
-        </motion.div>
+        </div>
 
         {/* Instagram-Style Image Strip with Hover Scale-Up on Light Beige Canvas */}
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4">
           {stripItems.slice(0, 5).map((item, idx) => (
             <motion.div
               key={item.id}
-              initial={{ opacity: 0, y: 25 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-40px' }}
-              transition={{ duration: 0.5, delay: idx * 0.08 }}
+              data-reveal-delay={idx * 80}
               whileHover={{ y: -6 }}
               onClick={() => setSelectedSample(item)}
-              className="relative aspect-square rounded-2xl overflow-hidden cursor-pointer group shadow-sm hover:shadow-lg border-2 border-white bg-white"
+              className="reveal-card relative aspect-square rounded-2xl overflow-hidden cursor-pointer group shadow-sm hover:shadow-lg border-2 border-white bg-white"
             >
               <img
                 src={item.imageUrl}

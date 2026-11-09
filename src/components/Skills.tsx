@@ -24,6 +24,25 @@ export const Skills: React.FC = () => {
     { id: 'competencies', label: 'CORE' },
   ];
 
+  const categoryImages: Record<string, { image: string; alt: string }> = {
+    admin: {
+      image: '/images/skills_admin_organization.jpg',
+      alt: 'Minimalist organized desktop workspace with planner, document filing folders, notebook and laptop',
+    },
+    communication: {
+      image: '/images/customer_care_headset_station.jpg',
+      alt: 'Customer care professional communication station with headset and laptop',
+    },
+    software: {
+      image: '/images/skills_software_tools.jpg',
+      alt: 'Modern workspace with dual screens displaying software productivity tools and spreadsheets',
+    },
+    competencies: {
+      image: '/images/skills_core_competencies.jpg',
+      alt: 'Collaborative team working together with high focus and execution',
+    },
+  };
+
   const getCategoryIcon = (id: string) => {
     switch (id) {
       case 'admin':
@@ -62,12 +81,9 @@ export const Skills: React.FC = () => {
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-14 sm:pb-20 relative z-10">
         
         {/* Section Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-50px' }}
-          transition={{ duration: 0.6 }}
-          className="text-center max-w-2xl mx-auto mb-12 sm:mb-16"
+        <div
+          data-reveal="fade-in"
+          className="reveal-on-scroll text-center max-w-2xl mx-auto mb-12 sm:mb-16"
         >
           <p className="text-[11px] sm:text-xs font-semibold tracking-[0.25em] text-[#C27A52] uppercase mb-2">
             Professional Stack
@@ -79,7 +95,7 @@ export const Skills: React.FC = () => {
           <p className="mt-3 text-xs sm:text-sm text-[#5A4A42] leading-relaxed font-light">
             Core competencies refined through 5 years of customer service, technical support, spreadsheet management, and administrative coordination.
           </p>
-        </motion.div>
+        </div>
 
         {/* Search & Category Filter Controls */}
         <motion.div
@@ -127,55 +143,74 @@ export const Skills: React.FC = () => {
         {/* 4 Grouped Skill Cards Grid with Staggered Motion */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
           <AnimatePresence mode="popLayout">
-            {filteredCategories.map((group) => (
-              <motion.div
-                key={group.id}
-                layout
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.95 }}
-                whileHover={{ y: -6, boxShadow: '0 16px 24px -6px rgba(194, 122, 82, 0.1)' }}
-                transition={{ type: 'spring', stiffness: 300, damping: 22 }}
-                className="p-7 sm:p-8 rounded-3xl bg-white border border-[#E8D9CD] shadow-sm flex flex-col justify-between"
-              >
-                <div>
-                  {/* Header */}
-                  <div className="flex items-center justify-between pb-4 mb-4 border-b border-[#F2E5DC]">
-                    <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-xl bg-[#F7EFE9] border border-[#E8D9CD] flex items-center justify-center shadow-2xs">
-                        {getCategoryIcon(group.id)}
-                      </div>
-                      <div>
-                        <h3 className="text-base sm:text-lg font-serif italic font-bold text-[#2D2522]">
-                          {group.categoryName}
-                        </h3>
-                        <span className="text-[11px] font-semibold tracking-wider uppercase text-[#C27A52]">
-                          {group.count || `${group.filteredSkills.length} competencies`}
-                        </span>
+            {filteredCategories.map((group, idx) => {
+              const catVisual = categoryImages[group.id] || {
+                image: '/images/skills_admin_organization.jpg',
+                alt: group.categoryName,
+              };
+
+              return (
+                <motion.div
+                  key={group.id}
+                  layout
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.95 }}
+                  data-reveal-delay={(idx % 2) * 150}
+                  whileHover={{ y: -6, boxShadow: '0 16px 24px -6px rgba(194, 122, 82, 0.1)' }}
+                  transition={{ type: 'spring', stiffness: 300, damping: 22 }}
+                  className="reveal-card p-6 sm:p-7 rounded-3xl bg-white border border-[#E8D9CD] shadow-sm flex flex-col justify-between overflow-hidden"
+                >
+                  <div>
+                    {/* Visual Card Banner for each category */}
+                    <div className="relative aspect-[16/7] w-full overflow-hidden rounded-2xl mb-5 bg-[#FAF5F0] border border-[#E8D9CD]">
+                      <img
+                        src={catVisual.image}
+                        alt={catVisual.alt}
+                        loading="lazy"
+                        className="w-full h-full object-cover transition-transform duration-700 hover:scale-106"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/25 via-transparent to-transparent pointer-events-none" />
+                    </div>
+
+                    {/* Header */}
+                    <div className="flex items-center justify-between pb-4 mb-4 border-b border-[#F2E5DC]">
+                      <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 rounded-xl bg-[#F7EFE9] border border-[#E8D9CD] flex items-center justify-center shadow-2xs">
+                          {getCategoryIcon(group.id)}
+                        </div>
+                        <div>
+                          <h3 className="text-base sm:text-lg font-serif italic font-bold text-[#2D2522]">
+                            {group.categoryName}
+                          </h3>
+                          <span className="text-[11px] font-semibold tracking-wider uppercase text-[#C27A52]">
+                            {group.count || `${group.filteredSkills.length} competencies`}
+                          </span>
+                        </div>
                       </div>
                     </div>
-                  </div>
 
-                  <p className="text-xs text-[#5A4A42] mb-5 leading-relaxed font-light">
-                    {group.description}
-                  </p>
+                    <p className="text-xs text-[#5A4A42] mb-5 leading-relaxed font-light">
+                      {group.description}
+                    </p>
 
-                  {/* Exact Competency Items with Micro-Hovers */}
-                  <div className="flex flex-wrap gap-2">
-                    {group.filteredSkills.map((skill, sIdx) => (
-                      <motion.span
-                        key={sIdx}
-                        whileHover={{ scale: 1.04, y: -1 }}
-                        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-light bg-[#F7EFE9] text-[#2D2522] border border-[#E8D9CD] hover:border-[#C27A52] transition-colors cursor-default"
-                      >
-                        <CheckCircle2 className="w-3.5 h-3.5 text-[#C27A52] shrink-0" />
-                        <span>{skill}</span>
-                      </motion.span>
-                    ))}
+                    {/* Exact Competency Items with Micro-Hovers */}
+                    <div className="flex flex-wrap gap-2">
+                      {group.filteredSkills.map((skill, sIdx) => (
+                        <motion.span
+                          key={sIdx}
+                          whileHover={{ scale: 1.04, y: -1 }}
+                          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-light bg-[#F7EFE9] text-[#2D2522] border border-[#E8D9CD] hover:border-[#C27A52] transition-colors cursor-default"
+                        >
+                          <CheckCircle2 className="w-3.5 h-3.5 text-[#C27A52] shrink-0" />
+                          <span>{skill}</span>
+                        </motion.span>
+                      ))}
+                    </div>
                   </div>
-                </div>
-              </motion.div>
-            ))}
+                </motion.div>
+              );
+            })}
           </AnimatePresence>
         </div>
 

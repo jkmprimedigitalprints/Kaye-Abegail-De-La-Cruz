@@ -16,12 +16,9 @@ export const Education: React.FC<EducationProps> = ({ onViewResumeClick }) => {
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-14 sm:pb-20">
         
         {/* Section Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-50px' }}
-          transition={{ duration: 0.6 }}
-          className="text-center max-w-2xl mx-auto mb-12 sm:mb-16"
+        <div
+          data-reveal="fade-in"
+          className="reveal-on-scroll text-center max-w-2xl mx-auto mb-12 sm:mb-16"
         >
           <p className="text-[11px] sm:text-xs font-semibold tracking-[0.25em] text-[#C27A52] uppercase mb-2">
             Academic Background
@@ -33,18 +30,15 @@ export const Education: React.FC<EducationProps> = ({ onViewResumeClick }) => {
           <p className="mt-3 text-xs sm:text-sm text-[#5A4A42] leading-relaxed font-light">
             Educational foundation and verified language credentials for Kaye Abegail De La Cruz.
           </p>
-        </motion.div>
+        </div>
 
         {/* 2-Column Grid: Formal Education Left, Languages & Terms Right */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch max-w-5xl mx-auto mb-12">
           
           {/* Left: Formal Education */}
-          <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: '-50px' }}
-            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-            className="lg:col-span-7 p-7 sm:p-9 rounded-3xl bg-white border border-[#E8D9CD] shadow-sm space-y-6 flex flex-col justify-between"
+          <div
+            data-reveal-delay="0"
+            className="reveal-card lg:col-span-7 p-7 sm:p-9 rounded-3xl bg-white border border-[#E8D9CD] shadow-sm space-y-6 flex flex-col justify-between overflow-hidden"
           >
             <div>
               <div className="flex items-center gap-3 mb-6 pb-4 border-b border-[#F2E5DC]">
@@ -93,15 +87,12 @@ export const Education: React.FC<EducationProps> = ({ onViewResumeClick }) => {
             <div className="pt-4 border-t border-[#F2E5DC] text-xs text-[#5A4A42] font-light">
               Instructional clarity, organized record keeping, and patient communication skills.
             </div>
-          </motion.div>
+          </div>
 
           {/* Right: Languages & Availability */}
-          <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: '-50px' }}
-            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-            className="lg:col-span-5 p-7 sm:p-9 rounded-3xl bg-white border border-[#E8D9CD] shadow-sm flex flex-col justify-between"
+          <div
+            data-reveal-delay="150"
+            className="reveal-card lg:col-span-5 p-7 sm:p-9 rounded-3xl bg-white border border-[#E8D9CD] shadow-sm flex flex-col justify-between overflow-hidden"
           >
             <div>
               <div className="flex items-center gap-3 mb-6 pb-4 border-b border-[#F2E5DC]">
@@ -169,7 +160,7 @@ export const Education: React.FC<EducationProps> = ({ onViewResumeClick }) => {
                 </motion.a>
               </div>
             </div>
-          </motion.div>
+          </div>
 
         </div>
 

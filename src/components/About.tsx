@@ -50,12 +50,9 @@ export const About: React.FC<AboutProps> = ({ onHireMeClick }) => {
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-14 sm:pb-20">
         
         {/* Section Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-50px' }}
-          transition={{ duration: 0.6 }}
-          className="text-center max-w-2xl mx-auto mb-12 sm:mb-16"
+        <div
+          data-reveal="fade-in"
+          className="reveal-on-scroll text-center max-w-2xl mx-auto mb-12 sm:mb-16"
         >
           <p className="text-[11px] sm:text-xs font-semibold tracking-[0.25em] text-[#C27A52] uppercase mb-2">
             Professional Story
@@ -64,7 +61,7 @@ export const About: React.FC<AboutProps> = ({ onHireMeClick }) => {
             About Kaye Abegail
           </h2>
           <div className="w-16 h-[2px] bg-[#C27A52]/40 mx-auto mt-3" />
-        </motion.div>
+        </div>
 
         {/* 4 Quick Stat Cards with Spring Hover */}
         <motion.div
@@ -78,12 +75,13 @@ export const About: React.FC<AboutProps> = ({ onHireMeClick }) => {
             <motion.div
               key={idx}
               variants={itemVariants}
+              data-reveal-delay={idx * 100}
               whileHover={{ 
                 y: -6, 
                 boxShadow: '0 12px 20px -4px rgba(194, 122, 82, 0.15)' 
               }}
               transition={{ type: 'spring', stiffness: 350, damping: 20 }}
-              className="p-5 sm:p-6 rounded-2xl bg-white border border-[#E8D9CD] shadow-xs text-center cursor-default"
+              className="reveal-card p-5 sm:p-6 rounded-2xl bg-white border border-[#E8D9CD] shadow-xs text-center cursor-default"
             >
               <div className="w-10 h-10 rounded-full bg-[#FAF5F0] flex items-center justify-center mx-auto mb-3 border border-[#E8D9CD]">
                 {getStatIcon(idx)}
@@ -102,12 +100,9 @@ export const About: React.FC<AboutProps> = ({ onHireMeClick }) => {
         </motion.div>
 
         {/* 4 Personal Strengths Cards */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-50px' }}
-          transition={{ duration: 0.6 }}
-          className="p-6 sm:p-8 rounded-3xl bg-white border border-[#E8D9CD] shadow-sm mb-12"
+        <div
+          data-reveal="fade-in"
+          className="reveal-on-scroll p-6 sm:p-8 rounded-3xl bg-white border border-[#E8D9CD] shadow-sm mb-12"
         >
           <div className="text-center mb-8">
             <h3 className="text-xl sm:text-2xl font-serif italic text-[#2D2522]">
@@ -138,7 +133,7 @@ export const About: React.FC<AboutProps> = ({ onHireMeClick }) => {
               </motion.div>
             ))}
           </div>
-        </motion.div>
+        </div>
 
         {/* Real Work Terms & Shift Availability Card */}
         <motion.div

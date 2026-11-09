@@ -13,7 +13,7 @@ export const Hero: React.FC<HeroProps> = ({ onHireMeClick, onViewResumeClick }) 
   const { personal } = PORTFOLIO_DATA;
   const [copiedEmail, setCopiedEmail] = useState(false);
 
-  const heroImage = '/src/assets/images/hero_portrait_arch_1794201967070.jpg';
+  const heroImage = '/images/hero_portrait_arch_1794201967070.jpg';
 
   const handleCopyEmail = () => {
     navigator.clipboard.writeText(personal.email);
@@ -22,7 +22,7 @@ export const Hero: React.FC<HeroProps> = ({ onHireMeClick, onViewResumeClick }) 
   };
 
   return (
-    <section id="hero" className="relative bg-[#C27A52] text-white pt-10 sm:pt-16 pb-0 overflow-hidden">
+    <section id="hero" className="relative bg-[#C27A52] text-white pt-16 sm:pt-24 lg:pt-28 pb-0 overflow-hidden">
       
       {/* Background Soft Organic Floating Accents */}
       <motion.div

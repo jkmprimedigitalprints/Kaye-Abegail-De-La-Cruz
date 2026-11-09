@@ -131,13 +131,10 @@ export const Contact: React.FC<ContactProps> = ({ selectedService }) => {
     <section id="contact" className="pt-14 sm:pt-20 pb-0 bg-[#FAF5F0] text-[#2D2522] relative overflow-hidden">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pb-14 sm:pb-20">
         
-        {/* Section Header styled as "Get The Latest" in reference */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-50px' }}
-          transition={{ duration: 0.6 }}
-          className="text-center max-w-2xl mx-auto mb-12 sm:mb-16"
+        {/* Section Header */}
+        <div
+          data-reveal="fade-in"
+          className="reveal-on-scroll text-center max-w-2xl mx-auto mb-12 sm:mb-16"
         >
           <p className="text-[11px] sm:text-xs font-semibold tracking-[0.25em] text-[#C27A52] uppercase mb-2">
             Get In Touch
@@ -149,18 +146,15 @@ export const Contact: React.FC<ContactProps> = ({ selectedService }) => {
           <p className="mt-3 text-xs sm:text-sm text-[#5A4A42] font-light leading-relaxed">
             Need dependable administrative support, calendar management, or customer service? Send a note below or reach out directly.
           </p>
-        </motion.div>
+        </div>
 
         {/* Two-Column Grid: Form Left, Direct Info Right */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-12 items-start">
           
           {/* Left: Contact Form in Cream White Card with Slide-In */}
-          <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: '-50px' }}
-            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-            className="lg:col-span-7 p-7 sm:p-9 rounded-3xl bg-white text-[#2D2522] shadow-sm border border-[#E8D9CD]"
+          <div
+            data-reveal-delay="0"
+            className="reveal-card lg:col-span-7 p-7 sm:p-9 rounded-3xl bg-white text-[#2D2522] shadow-sm border border-[#E8D9CD]"
           >
             {isSubmitted ? (
               <div className="text-center py-10 space-y-4">
@@ -313,17 +307,13 @@ export const Contact: React.FC<ContactProps> = ({ selectedService }) => {
                 </motion.button>
               </form>
             )}
-          </motion.div>
+          </div>
 
-          {/* Right: Direct Contact & Availability Cards in Light Beige with Slide-In */}
-          <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: '-50px' }}
-            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-            className="lg:col-span-5 space-y-4"
+          {/* Right: Direct Contact & Availability Cards in Light Beige */}
+          <div
+            data-reveal-delay="150"
+            className="reveal-card lg:col-span-5 space-y-4"
           >
-            
             {/* Direct Email Card */}
             <div className="p-5 rounded-2xl bg-white border border-[#E8D9CD] space-y-2 shadow-xs">
               <span className="text-[10px] uppercase tracking-[0.2em] text-[#C27A52] font-semibold block">
@@ -379,7 +369,7 @@ export const Contact: React.FC<ContactProps> = ({ selectedService }) => {
               </p>
             </div>
 
-          </motion.div>
+          </div>
 
         </div>
 
