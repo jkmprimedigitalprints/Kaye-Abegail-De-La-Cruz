@@ -1,5 +1,15 @@
 import React from 'react';
-import { CheckCircle2, ArrowRight } from 'lucide-react';
+import { 
+  CheckCircle2, 
+  ArrowRight, 
+  ShieldCheck, 
+  Headset, 
+  Award, 
+  Building2, 
+  Sparkles, 
+  Star,
+  Cpu
+} from 'lucide-react';
 import { motion } from 'motion/react';
 import { PORTFOLIO_DATA } from '../data/portfolioData';
 import { WavyDivider } from './WavyDivider';
@@ -11,25 +21,43 @@ interface ExperienceProps {
 export const Experience: React.FC<ExperienceProps> = ({ onHireMeClick }) => {
   const { workExperience } = PORTFOLIO_DATA;
 
-  // Custom curated visual assets for each alternating arch & circular photo
-  const visuals = [
+  // Curated vector graphic design motifs for each role
+  const roleDesigns = [
     {
-      arch: '/images/skills-software-tools.jpg',
-      circle: '/images/coffee-latte-detail.jpg',
-      altArch: 'Technical support diagnostic tools and dual-screen computer workstation',
-      altCircle: 'Cozy artisan morning coffee cup with latte art',
+      company: 'Accenture Inc.',
+      gradient: 'from-[#C27A52] via-[#A9623D] to-[#8E4A28]',
+      badge: 'Tier-1 Technical Support',
+      badgeIcon: <ShieldCheck className="w-4 h-4 text-[#E6BE85]" />,
+      centerIcon: <Cpu className="w-7 h-7 text-white" />,
+      tagline: 'Global Technology Services',
+      pills: ['Case Documentation', 'Diagnostic Flow', 'SOP Adherence'],
+      circleIcon: <Star className="w-5 h-5 text-[#2D2522]" />,
+      circleText: 'ENTERPRISE',
+      subText: 'Tech Support',
     },
     {
-      arch: '/images/customer-care-headset-station.jpg',
-      circle: '/images/project-website-creation.jpg',
-      altArch: 'Customer care professional communication station with headset and laptop',
-      altCircle: 'Responsive digital website layout',
+      company: 'TELUS International',
+      gradient: 'from-[#B86B42] via-[#A85B33] to-[#7B3C1E]',
+      badge: 'Omnichannel Customer Care',
+      badgeIcon: <Headset className="w-4 h-4 text-[#E6BE85]" />,
+      centerIcon: <Headset className="w-7 h-7 text-white" />,
+      tagline: 'Digital Customer Experience',
+      pills: ['Omnichannel Support', 'Data Integrity', 'Account Research'],
+      circleIcon: <CheckCircle2 className="w-5 h-5 text-[#2D2522]" />,
+      circleText: 'VERIFIED',
+      subText: 'Customer Care',
     },
     {
-      arch: '/images/skills-admin-organization.jpg',
-      circle: '/images/planner-notes-arch.jpg',
-      altArch: 'Structured administrative documentation, task folders and filing workspace',
-      altCircle: 'Daily planner schedule note',
+      company: 'Alorica - Fort Taguig',
+      gradient: 'from-[#A85B33] via-[#984D28] to-[#6E3316]',
+      badge: 'High-Volume Customer Service',
+      badgeIcon: <Award className="w-4 h-4 text-[#E6BE85]" />,
+      centerIcon: <Building2 className="w-7 h-7 text-white" />,
+      tagline: 'High-Volume Operations',
+      pills: ['Active Listening', 'High Call Volume', 'De-escalation'],
+      circleIcon: <Sparkles className="w-5 h-5 text-[#2D2522]" />,
+      circleText: '5 YEARS',
+      subText: 'BPO Track',
     },
   ];
 
@@ -70,11 +98,11 @@ export const Experience: React.FC<ExperienceProps> = ({ onHireMeClick }) => {
           </p>
         </div>
 
-        {/* Alternating Content Boxes: White Card Overlapping Arch Image */}
+        {/* Alternating Content Boxes: White Card Overlapping Arch Design */}
         <div className="space-y-20 sm:space-y-28">
           {workExperience.map((job, index) => {
             const isFlipped = index % 2 === 1; // Even rows: Card Left / Arch Right; Odd rows: Arch Left / Card Right
-            const visual = visuals[index % visuals.length];
+            const design = roleDesigns[index % roleDesigns.length];
 
             return (
               <div
@@ -158,7 +186,7 @@ export const Experience: React.FC<ExperienceProps> = ({ onHireMeClick }) => {
                   </motion.div>
                 </motion.div>
 
-                {/* Arch-Shaped Image Mask with Overlapping Circular Detail */}
+                {/* Arch-Shaped Vector Design Frame with Overlapping Medallion */}
                 <motion.div
                   initial={{ opacity: 0, scale: 0.92, y: 30 }}
                   whileInView={{ opacity: 1, scale: 1, y: 0 }}
@@ -168,30 +196,84 @@ export const Experience: React.FC<ExperienceProps> = ({ onHireMeClick }) => {
                 >
                   <div className="relative w-full max-w-[280px] sm:max-w-[320px]">
                     
-                    {/* Main Arch Frame */}
-                    <div className="rounded-t-[160px] rounded-b-2xl overflow-hidden aspect-[3/4] bg-[#F7EFE9] shadow-xl border-4 border-white animate-gentle-float">
-                      <motion.img
-                        whileHover={{ scale: 1.06 }}
-                        transition={{ duration: 0.6 }}
-                        src={visual.arch}
-                        alt={visual.altArch}
-                        className="w-full h-full object-cover"
-                      />
+                    {/* Main Arch Vector Card */}
+                    <div className={`rounded-t-[160px] rounded-b-2xl overflow-hidden aspect-[3/4] bg-gradient-to-b ${design.gradient} shadow-2xl border-4 border-white p-6 sm:p-7 flex flex-col justify-between text-white relative animate-gentle-float select-none`}>
+                      
+                      {/* Background concentric arch line pattern */}
+                      <svg
+                        className="absolute inset-0 w-full h-full text-white/10 pointer-events-none"
+                        viewBox="0 0 200 260"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="1.5"
+                      >
+                        <path d="M20 260 V100 A80 80 0 0 1 180 100 V260" strokeDasharray="3 3" />
+                        <path d="M40 260 V100 A60 60 0 0 1 160 100 V260" />
+                        <path d="M60 260 V100 A40 40 0 0 1 140 100 V260" strokeDasharray="2 2" />
+                        <circle cx="100" cy="90" r="28" strokeDasharray="4 2" />
+                      </svg>
+
+                      {/* Top Arch Badge */}
+                      <div className="relative z-10 pt-4 flex flex-col items-center text-center">
+                        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/20 backdrop-blur-xs border border-white/30 text-[10px] font-semibold tracking-wider uppercase text-white shadow-xs">
+                          {design.badgeIcon}
+                          <span>{design.badge}</span>
+                        </div>
+                      </div>
+
+                      {/* Center Content: Monogram Emblem & Company */}
+                      <div className="relative z-10 my-auto text-center py-2">
+                        <div className="w-14 h-14 rounded-2xl bg-white/20 backdrop-blur-md border border-white/40 flex items-center justify-center mx-auto shadow-md mb-3">
+                          {design.centerIcon}
+                        </div>
+                        <h4 className="text-xl sm:text-2xl font-serif italic text-white font-bold tracking-tight">
+                          {design.company}
+                        </h4>
+                        <p className="text-[11px] text-[#FFE8E3] tracking-widest uppercase font-light mt-0.5">
+                          {design.tagline}
+                        </p>
+
+                        {/* Capability Pills */}
+                        <div className="flex flex-wrap justify-center gap-1.5 mt-4">
+                          {design.pills.map((pill, pIdx) => (
+                            <span
+                              key={pIdx}
+                              className="px-2 py-0.5 rounded-md bg-white/15 backdrop-blur-xs text-[9px] font-medium tracking-wide text-white border border-white/20"
+                            >
+                              {pill}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+
+                      {/* Bottom Footer Bar */}
+                      <div className="relative z-10 pt-3 border-t border-white/20 flex items-center justify-between text-[10px] text-white/90">
+                        <span className="font-semibold">{job.period}</span>
+                        <span className="flex items-center gap-1 text-[#E6BE85]">
+                          <Sparkles className="w-3 h-3" />
+                          <span>5 Yrs BPO</span>
+                        </span>
+                      </div>
+
                     </div>
 
-                    {/* Overlapping Circular Accent Image matching Nicole Marie style */}
+                    {/* Overlapping Circular Medallion matching Nicole Marie style */}
                     <motion.div
                       whileHover={{ scale: 1.1, rotate: 6 }}
                       transition={{ type: 'spring', stiffness: 300, damping: 15 }}
                       className={`absolute -bottom-5 ${
                         isFlipped ? '-left-5 sm:-left-7' : '-right-5 sm:-right-7'
-                      } w-24 sm:w-28 h-24 sm:h-28 rounded-full overflow-hidden border-4 border-white shadow-xl bg-white z-30 cursor-pointer`}
+                      } w-24 sm:w-28 h-24 sm:h-28 rounded-full border-4 border-white shadow-2xl bg-gradient-to-br from-[#E6BE85] to-[#D4A968] z-30 cursor-pointer flex flex-col items-center justify-center text-center p-2 text-[#2D2522] select-none`}
                     >
-                      <img
-                        src={visual.circle}
-                        alt={visual.altCircle}
-                        className="w-full h-full object-cover"
-                      />
+                      <div className="w-7 h-7 rounded-full bg-white/90 flex items-center justify-center mb-0.5 shadow-2xs">
+                        {design.circleIcon}
+                      </div>
+                      <span className="text-[10px] font-bold tracking-wider uppercase leading-none">
+                        {design.circleText}
+                      </span>
+                      <span className="text-[8px] text-[#4A3B32] uppercase tracking-widest font-semibold mt-0.5">
+                        {design.subText}
+                      </span>
                     </motion.div>
 
                   </div>

@@ -24,22 +24,26 @@ export const Skills: React.FC = () => {
     { id: 'competencies', label: 'CORE' },
   ];
 
-  const categoryImages: Record<string, { image: string; alt: string }> = {
+  const categoryDesignMeta: Record<string, { gradient: string; badge: string; highlights: string[] }> = {
     admin: {
-      image: '/images/skills-admin-organization.jpg',
-      alt: 'Minimalist organized desktop workspace with planner, document filing folders, notebook and laptop',
+      gradient: 'from-[#FAF5F0] via-[#F7EFE9] to-[#EBD9CC]',
+      badge: '8 Competencies',
+      highlights: ['Data Hygiene', 'Filing', 'Coordination'],
     },
     communication: {
-      image: '/images/customer-care-headset-station.jpg',
-      alt: 'Customer care professional communication station with headset and laptop',
+      gradient: 'from-[#FAF5F0] via-[#FFE8E3] to-[#F7EFE9]',
+      badge: '5 Competencies',
+      highlights: ['Customer Care', 'Email Etiquette', 'De-escalation'],
     },
     software: {
-      image: '/images/skills-software-tools.jpg',
-      alt: 'Modern workspace with dual screens displaying software productivity tools and spreadsheets',
+      gradient: 'from-[#FAF5F0] via-[#F2E5DC] to-[#E6BE85]/20',
+      badge: '6 Core Suites',
+      highlights: ['Google Workspace', 'Spreadsheets', 'Troubleshooting'],
     },
     competencies: {
-      image: '/images/skills-core-competencies.jpg',
-      alt: 'Collaborative team working together with high focus and execution',
+      gradient: 'from-[#FAF5F0] via-[#F7EFE9] to-[#EBD9CC]',
+      badge: '7 Work Ethics',
+      highlights: ['Attention to Detail', 'Multitasking', 'Independence'],
     },
   };
 
@@ -144,9 +148,10 @@ export const Skills: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
           <AnimatePresence mode="popLayout">
             {filteredCategories.map((group, idx) => {
-              const catVisual = categoryImages[group.id] || {
-                image: '/images/skills-admin-organization.jpg',
-                alt: group.categoryName,
+              const meta = categoryDesignMeta[group.id] || {
+                gradient: 'from-[#FAF5F0] via-[#F7EFE9] to-[#EBD9CC]',
+                badge: 'Competencies',
+                highlights: ['Professional', 'Verified'],
               };
 
               return (
@@ -162,31 +167,49 @@ export const Skills: React.FC = () => {
                   className="reveal-card p-6 sm:p-7 rounded-3xl bg-white border border-[#E8D9CD] shadow-sm flex flex-col justify-between overflow-hidden"
                 >
                   <div>
-                    {/* Visual Card Banner for each category */}
-                    <div className="relative aspect-[16/7] w-full overflow-hidden rounded-2xl mb-5 bg-[#FAF5F0] border border-[#E8D9CD]">
-                      <img
-                        src={catVisual.image}
-                        alt={catVisual.alt}
-                        className="w-full h-full object-cover transition-transform duration-700 hover:scale-106"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/25 via-transparent to-transparent pointer-events-none" />
-                    </div>
+                    {/* Vector Category Design Banner */}
+                    <div className={`relative aspect-[16/6] w-full overflow-hidden rounded-2xl mb-5 bg-gradient-to-r ${meta.gradient} border border-[#E8D9CD] p-4 flex items-center justify-between shadow-2xs`}>
+                      {/* Decorative SVG grid / curves */}
+                      <svg className="absolute -right-4 -bottom-6 w-32 h-32 text-[#C27A52]/10 pointer-events-none" viewBox="0 0 100 100" fill="none" stroke="currentColor" strokeWidth="2">
+                        <circle cx="50" cy="50" r="40" strokeDasharray="3 3" />
+                        <circle cx="50" cy="50" r="24" />
+                      </svg>
 
-                    {/* Header */}
-                    <div className="flex items-center justify-between pb-4 mb-4 border-b border-[#F2E5DC]">
-                      <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-xl bg-[#F7EFE9] border border-[#E8D9CD] flex items-center justify-center shadow-2xs">
+                      <div className="relative z-10 flex items-center gap-3.5">
+                        <div className="w-11 h-11 rounded-xl bg-white shadow-xs border border-[#E8D9CD] flex items-center justify-center text-[#C27A52]">
                           {getCategoryIcon(group.id)}
                         </div>
                         <div>
-                          <h3 className="text-base sm:text-lg font-serif italic font-bold text-[#2D2522]">
-                            {group.categoryName}
-                          </h3>
-                          <span className="text-[11px] font-semibold tracking-wider uppercase text-[#C27A52]">
-                            {group.count || `${group.filteredSkills.length} competencies`}
+                          <span className="text-[9px] font-bold tracking-widest uppercase text-[#C27A52] block">
+                            Stack Domain
                           </span>
+                          <h4 className="text-sm sm:text-base font-serif italic font-bold text-[#2D2522]">
+                            {group.categoryName}
+                          </h4>
                         </div>
                       </div>
+
+                      <div className="relative z-10 hidden sm:flex flex-col items-end">
+                        <span className="px-2.5 py-0.5 rounded-full bg-white/90 text-[#2D2522] text-[9px] font-bold tracking-wider uppercase border border-[#E8D9CD]">
+                          {meta.badge}
+                        </span>
+                        <div className="flex gap-1 mt-1.5">
+                          {meta.highlights.slice(0, 2).map((hl, hIdx) => (
+                            <span key={hIdx} className="text-[9px] text-[#5A4A42] bg-[#FAF5F0]/80 px-1.5 py-0.5 rounded font-light">
+                              {hl}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="flex items-center justify-between pb-3 mb-3 border-b border-[#F2E5DC]">
+                      <span className="text-[11px] font-semibold tracking-wider uppercase text-[#C27A52]">
+                        {group.count || `${group.filteredSkills.length} competencies`}
+                      </span>
+                      <span className="text-[10px] text-[#8A7A72] uppercase tracking-widest font-medium">
+                        Verified Capability
+                      </span>
                     </div>
 
                     <p className="text-xs text-[#5A4A42] mb-5 leading-relaxed font-light">

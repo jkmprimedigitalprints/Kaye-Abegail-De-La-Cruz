@@ -1,5 +1,18 @@
 import React, { useState } from 'react';
-import { ArrowRight, Check, ChevronDown, ChevronUp } from 'lucide-react';
+import { 
+  ArrowRight, 
+  Check, 
+  ChevronDown, 
+  ChevronUp,
+  Briefcase,
+  Table,
+  Mail,
+  Calendar,
+  Clock,
+  FolderTree,
+  Globe,
+  Sparkles
+} from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { PORTFOLIO_DATA } from '../data/portfolioData';
 import { WavyDivider } from './WavyDivider';
@@ -12,35 +25,49 @@ export const Services: React.FC<ServicesProps> = ({ onSelectService }) => {
   const { services } = PORTFOLIO_DATA;
   const [showAllServices, setShowAllServices] = useState(false);
 
-  // Dedicated high-resolution royalty-free service images matching warm terracotta aesthetic
-  const serviceVisuals: Record<string, { image: string; alt: string }> = {
+  // Service vector design graphics metadata
+  const serviceDesignMeta: Record<string, { icon: React.ReactNode; badge: string; motif: string; accentColor: string }> = {
     'general-va': {
-      image: '/images/service-general-va.jpg',
-      alt: 'Minimalist organized workstation with notepad, laptop and coffee for virtual assistant tasks',
+      icon: <Briefcase className="w-8 h-8 text-[#C27A52]" />,
+      badge: 'Core VA • Administrative',
+      motif: 'M4 6h16M4 12h10M4 18h14',
+      accentColor: 'from-[#FAF5F0] via-[#F7EFE9] to-[#EBD9CC]',
     },
     'data-entry': {
-      image: '/images/service-data-entry.jpg',
-      alt: 'Structured spreadsheet records, data deduplication, and cleanup tables on screen',
+      icon: <Table className="w-8 h-8 text-[#C27A52]" />,
+      badge: 'Data Hygiene • Deduplication',
+      motif: 'M3 3h18v18H3zM3 9h18M3 15h18M9 3v18M15 3v18',
+      accentColor: 'from-[#FAF5F0] via-[#F2E5DC] to-[#E6BE85]/20',
     },
     'email-management': {
-      image: '/images/service-email-management.jpg',
-      alt: 'Organized email inbox triage, labeling, and customer drafting workspace',
+      icon: <Mail className="w-8 h-8 text-[#C27A52]" />,
+      badge: 'Inbox Zero • Customer Care',
+      motif: 'M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z',
+      accentColor: 'from-[#FAF5F0] via-[#FFE8E3] to-[#F7EFE9]',
     },
     'calendar-management': {
-      image: '/images/service-calendar-management.jpg',
-      alt: 'Time blocking scheduler and conflict-free calendar management planner',
+      icon: <Calendar className="w-8 h-8 text-[#C27A52]" />,
+      badge: 'Schedule Sync • Time Blocking',
+      motif: 'M8 2v4M16 2v4M3 10h18M5 4h14a2 2 0 012 2v14a2 2 0 01-2 2H5a2 2 0 01-2-2V6a2 2 0 012-2z',
+      accentColor: 'from-[#FAF5F0] via-[#F7EFE9] to-[#EBD9CC]',
     },
     'appointment-scheduling': {
-      image: '/images/service-appointment-scheduling.jpg',
-      alt: 'Consultation scheduling, meeting booking, and intake confirmation setup',
+      icon: <Clock className="w-8 h-8 text-[#C27A52]" />,
+      badge: 'Consultation • Booking Flow',
+      motif: 'M12 6v6l4 2M12 22a10 10 0 100-20 10 10 0 000 20z',
+      accentColor: 'from-[#FAF5F0] via-[#F2E5DC] to-[#E6BE85]/20',
     },
     'document-organization': {
-      image: '/images/service-document-organization.jpg',
-      alt: 'Structured Google Drive folders, document filing, and SOP repository',
+      icon: <FolderTree className="w-8 h-8 text-[#C27A52]" />,
+      badge: 'Cloud Hierarchy • SOP Archive',
+      motif: 'M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z',
+      accentColor: 'from-[#FAF5F0] via-[#FFE8E3] to-[#F7EFE9]',
     },
     'website-creation': {
-      image: '/images/service-website-creation.jpg',
-      alt: 'Clean and modern mobile-responsive website layout and portfolio page',
+      icon: <Globe className="w-8 h-8 text-[#C27A52]" />,
+      badge: 'Responsive Layout • Web Presence',
+      motif: 'M12 2a10 10 0 100 20 10 10 0 000-20zM2 12h20M12 2a15 15 0 010 20M12 2a15 15 0 000 20',
+      accentColor: 'from-[#FAF5F0] via-[#F7EFE9] to-[#EBD9CC]',
     },
   };
 
@@ -101,9 +128,11 @@ export const Services: React.FC<ServicesProps> = ({ onSelectService }) => {
         >
           <AnimatePresence mode="popLayout">
             {displayedServices.map((service, index) => {
-              const visual = serviceVisuals[service.id] || {
-                image: '/images/service-general-va.jpg',
-                alt: service.title,
+              const meta = serviceDesignMeta[service.id] || {
+                icon: <Briefcase className="w-8 h-8 text-[#C27A52]" />,
+                badge: 'VA Support',
+                motif: 'M4 6h16M4 12h10M4 18h14',
+                accentColor: 'from-[#FAF5F0] via-[#F7EFE9] to-[#EBD9CC]',
               };
 
               return (
@@ -120,18 +149,46 @@ export const Services: React.FC<ServicesProps> = ({ onSelectService }) => {
                   className="reveal-card rounded-2xl bg-white overflow-hidden shadow-sm flex flex-col justify-between border border-[#E8D9CD] group"
                 >
                   <div>
-                    {/* Image Top */}
-                    <div className="relative aspect-[16/11] overflow-hidden bg-[#F7EFE9]">
-                      <img
-                        src={visual.image}
-                        alt={visual.alt}
-                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-108"
-                      />
-                      <div className="absolute inset-0 bg-[#C27A52]/10 group-hover:bg-transparent transition-colors duration-300" />
-                      
-                      {/* Small badge */}
-                      <div className="absolute top-3 left-3 px-2.5 py-0.5 rounded-md bg-white/95 text-[#2D2522] text-[9px] uppercase tracking-wider font-semibold shadow-xs border border-[#E8D9CD]">
-                        VA Service
+                    {/* Bespoke Vector Graphic Header */}
+                    <div className={`relative aspect-[16/10] overflow-hidden bg-gradient-to-br ${meta.accentColor} border-b border-[#E8D9CD] flex flex-col justify-between p-5`}>
+                      {/* Decorative SVG background line art pattern */}
+                      <svg
+                        className="absolute -right-6 -bottom-6 w-36 h-36 text-[#C27A52]/10 pointer-events-none transition-transform duration-700 group-hover:scale-125 group-hover:rotate-12"
+                        viewBox="0 0 100 100"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                      >
+                        <circle cx="50" cy="50" r="45" strokeDasharray="3 3" />
+                        <circle cx="50" cy="50" r="32" />
+                        <circle cx="50" cy="50" r="18" strokeDasharray="2 2" />
+                        <path d="M50 5 L50 95 M5 50 L95 50" opacity="0.4" />
+                      </svg>
+
+                      {/* Top Bar: Service ID & Category Badge */}
+                      <div className="relative z-10 flex items-center justify-between">
+                        <span className="px-2.5 py-0.5 rounded-full bg-white/90 text-[#2D2522] text-[9px] uppercase tracking-wider font-bold shadow-xs border border-[#E8D9CD]">
+                          0{index + 1}
+                        </span>
+                        <span className="px-2.5 py-0.5 rounded-full bg-[#C27A52]/15 text-[#C27A52] text-[9px] uppercase tracking-wider font-semibold">
+                          {meta.badge}
+                        </span>
+                      </div>
+
+                      {/* Center Medallion Icon with Spring Hover */}
+                      <div className="relative z-10 my-auto flex items-center justify-center">
+                        <div className="w-14 h-14 rounded-2xl bg-white shadow-md border border-[#E8D9CD] flex items-center justify-center group-hover:scale-110 group-hover:border-[#C27A52] transition-all duration-300">
+                          {meta.icon}
+                        </div>
+                      </div>
+
+                      {/* Subtle Bottom Accent Indicator */}
+                      <div className="relative z-10 flex items-center justify-between text-[10px] text-[#5A4A42] font-medium tracking-wide">
+                        <span className="flex items-center gap-1 text-[#C27A52]">
+                          <Sparkles className="w-3 h-3" />
+                          <span>Professional VA</span>
+                        </span>
+                        <span className="text-[#8A7A72]">Custom SOP</span>
                       </div>
                     </div>
 
