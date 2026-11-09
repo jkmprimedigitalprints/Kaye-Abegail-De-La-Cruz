@@ -13,7 +13,7 @@ export const Hero: React.FC<HeroProps> = ({ onHireMeClick, onViewResumeClick }) 
   const { personal } = PORTFOLIO_DATA;
   const [copiedEmail, setCopiedEmail] = useState(false);
 
-  const heroImage = '/images/hero_portrait_arch_1794201967070.jpg';
+  const heroImage = '/images/kaye-photo.jpg';
 
   const handleCopyEmail = () => {
     navigator.clipboard.writeText(personal.email);
