@@ -105,6 +105,30 @@ export const Education: React.FC<EducationProps> = ({ onViewResumeClick }) => {
                 </div>
               </div>
 
+              {/* Professional Teaching Licensure Card */}
+              <motion.div
+                whileHover={{ y: -2 }}
+                transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+                className="mb-4 p-4 rounded-2xl bg-gradient-to-r from-[#FAF5F0] to-[#F7EFE9] border border-[#E8D9CD] flex items-center justify-between"
+              >
+                <div className="flex items-center gap-3">
+                  <div className="w-8 h-8 rounded-lg bg-emerald-100 border border-emerald-200 text-emerald-700 flex items-center justify-center shrink-0">
+                    <CheckCircle2 className="w-4 h-4" />
+                  </div>
+                  <div>
+                    <h4 className="text-sm font-serif italic font-bold text-[#2D2522]">
+                      Licensed Professional Teacher (LPT)
+                    </h4>
+                    <p className="text-[11px] text-[#C27A52] font-semibold">
+                      Professional Regulation Commission (PRC)
+                    </p>
+                  </div>
+                </div>
+                <span className="px-2.5 py-0.5 text-[9px] tracking-wider uppercase font-bold rounded-md bg-emerald-600 text-white shrink-0">
+                  Board Certified
+                </span>
+              </motion.div>
+
               <div className="space-y-3.5">
                 {personal.languages.map((lang, lIdx) => (
                   <motion.div

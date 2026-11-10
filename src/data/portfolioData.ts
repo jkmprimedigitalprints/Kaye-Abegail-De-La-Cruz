@@ -388,14 +388,11 @@ export const PORTFOLIO_DATA = {
       company: "Accenture Inc.",
       period: "Apr 2023 - Present",
       location: "Taguig, Metro Manila / Remote",
-      summary: "Providing prompt technical support and customer guidance via digital channels while maintaining meticulous case histories.",
+      summary: "Handled inbound phone calls and provided technical assistance and troubleshooting for various devices.",
       bullets: [
-        "Provide prompt technical support and customer guidance via digital channels, following standard operating procedures",
-        "Maintain thorough, error-free documentation of customer interactions, case histories, and troubleshooting steps in the internal database",
-        "Multitask between active customer interactions, diagnostic tools, and multiple support applications in a fast-paced environment",
-        "Resolve technical issues and escalate complex matters with detailed context"
+        "Handled inbound phone calls and provided technical assistance and troubleshooting for various devices."
       ],
-      skillsGained: ["Digital Technical Support", "Case Documentation", "Multitasking Under Pressure", "SOP Adherence"]
+      skillsGained: ["Inbound Technical Support", "Device Troubleshooting", "Phone Support", "Customer Care"]
     },
     {
       id: "telus",
@@ -403,14 +400,11 @@ export const PORTFOLIO_DATA = {
       company: "TELUS International Philippines",
       period: "Sept 2021 - Apr 2023",
       location: "Metro Manila",
-      summary: "Delivered omnichannel customer service and validated customer account data with high attention to detail.",
+      summary: "Managed and responded to customer inquiries through email.",
       bullets: [
-        "Handled diverse customer inquiries and account requests with professional written and verbal communication",
-        "Entered, updated, and validated customer account information with high attention to detail and data integrity",
-        "Researched guidelines and account policies to resolve concerns under pressure while meeting quality and attendance standards",
-        "Collaborated with team leaders and colleagues to adapt to updated account procedures and service targets"
+        "Managed and responded to customer inquiries through email."
       ],
-      skillsGained: ["Omnichannel Support", "Data Integrity", "Account Research", "Policy Compliance"]
+      skillsGained: ["Email Inquiries Management", "Customer Communication", "Written Correspondence", "Queue Management"]
     },
     {
       id: "alorica",
@@ -418,31 +412,39 @@ export const PORTFOLIO_DATA = {
       company: "Alorica - Fort Taguig",
       period: "Oct 2019 - Apr 2020",
       location: "Taguig, Metro Manila",
-      summary: "Resolved customer concerns in a structured, high-volume environment with active listening and composure.",
+      summary: "Assisted customers with order-related inquiries, concerns, and requests.",
       bullets: [
-        "Addressed customer inquiries and service requests in a structured, high-volume environment while following company protocols",
-        "Logged routine customer data accurately and routed unresolved issues to the appropriate support teams",
-        "Showed composure, patience, and active listening while resolving customer concerns"
+        "Assisted customers with order-related inquiries, concerns, and requests."
       ],
-      skillsGained: ["Active Listening", "Customer Patience", "High-Volume Call Handling", "Accurate Logging"]
+      skillsGained: ["Order Assistance", "Customer Inquiries", "Issue Resolution", "Client Service"]
     }
   ] as ExperienceItem[],
 
-  // 8. Education
+  // 8. Education & Professional Licensure
   education: [
+    {
+      institution: "University of Northeastern Philippines",
+      degree: "Master of Arts in Education (MAEd) – Major in Administration and Supervision",
+      period: "2026"
+    },
     {
       institution: "Central Bicol State University of Agriculture",
       degree: "Bachelor of Elementary Education, Major in Content Area",
-      period: "2015 - 2019",
-      details: "Solid academic grounding in structured communication, instructional clarity, curriculum organization, and student-centered support."
+      period: "2015 - 2019"
     },
     {
       institution: "Central Bicol State University of Agriculture",
       degree: "Secondary Education High School Diploma",
-      period: "2015",
-      details: "Academic foundation with honors and leadership participation."
+      period: "2015"
     }
   ] as EducationItem[],
+
+  professionalLicense: {
+    title: "Licensed Professional Teacher (LPT)",
+    acronym: "LPT",
+    issuer: "Professional Regulation Commission (PRC)",
+    status: "Active Professional License"
+  },
 
   // 9. Feature Flags
   showWorkSamples: true,
