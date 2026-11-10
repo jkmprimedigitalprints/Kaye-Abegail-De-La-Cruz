@@ -46,7 +46,7 @@ export default function App() {
       />
 
       {/* Spacer to prevent fixed navbar from obscuring top hero content */}
-      <div className="h-[105px] sm:h-[125px] md:h-[145px]" aria-hidden="true" />
+      <div className="h-[80px] sm:h-[90px] md:h-[105px]" aria-hidden="true" />
 
       {/* Main Content Sections with Organic Flowing Wave Dividers */}
       <main className="w-full overflow-hidden">

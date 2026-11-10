@@ -74,18 +74,6 @@ export const Navbar: React.FC<NavbarProps> = ({ onViewResumeClick }) => {
             onClick={(e) => handleNavClick(e, '#hero')}
             className="inline-flex flex-col items-center group focus:outline-none"
           >
-            {/* Elegant Arch Logo Mark */}
-            <motion.div
-              whileHover={{ scale: 1.08, rotate: -2 }}
-              transition={{ type: 'spring', stiffness: 350, damping: 15 }}
-              className="w-8 h-10 sm:w-9 sm:h-11 rounded-t-full rounded-b-md bg-[#C27A52] flex items-center justify-center shadow-xs border border-[#E6BE85] mb-1.5 relative overflow-hidden"
-            >
-              <div className="absolute inset-0.5 rounded-t-full rounded-b-xs border border-[#E6BE85]/60 pointer-events-none" />
-              <span className="font-serif italic font-bold text-white text-base sm:text-lg select-none leading-none pt-0.5">
-                K
-              </span>
-            </motion.div>
-
             <motion.h1
               whileHover={{ scale: 1.01 }}
               transition={{ duration: 0.2 }}
