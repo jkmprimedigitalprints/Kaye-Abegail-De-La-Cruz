@@ -77,11 +77,11 @@ export const Navbar: React.FC<NavbarProps> = ({ onViewResumeClick }) => {
             <motion.h1
               whileHover={{ scale: 1.01 }}
               transition={{ duration: 0.2 }}
-              className="text-2xl sm:text-3xl md:text-4xl font-serif tracking-[0.18em] sm:tracking-[0.25em] text-[#2D2522] uppercase transition-colors group-hover:text-[#C27A52]"
+              className="text-sm sm:text-base md:text-lg lg:text-xl font-serif font-bold tracking-[0.12em] sm:tracking-[0.16em] text-[#2D2522] uppercase transition-colors group-hover:text-[#C27A52] leading-tight"
             >
               KAYE ABEGAIL BUEN DE LA CRUZ
             </motion.h1>
-            <p className="text-xs sm:text-sm font-serif italic text-[#C27A52] tracking-wider mt-1 sm:mt-1.5">
+            <p className="text-[11px] sm:text-xs font-serif italic text-[#C27A52] tracking-wider mt-0.5 sm:mt-1">
               Virtual Assistant • Customer Care • Technical Support
             </p>
           </a>
