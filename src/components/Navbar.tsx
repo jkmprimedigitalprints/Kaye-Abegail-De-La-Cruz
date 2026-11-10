@@ -79,7 +79,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onViewResumeClick }) => {
               transition={{ duration: 0.2 }}
               className="text-2xl sm:text-3xl md:text-4xl font-serif tracking-[0.18em] sm:tracking-[0.25em] text-[#2D2522] uppercase transition-colors group-hover:text-[#C27A52]"
             >
-              KAYE ABEGAIL
+              KAYE ABEGAIL BUEN DE LA CRUZ
             </motion.h1>
             <p className="text-xs sm:text-sm font-serif italic text-[#C27A52] tracking-wider mt-1 sm:mt-1.5">
               Virtual Assistant • Customer Care • Technical Support
