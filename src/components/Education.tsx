@@ -83,10 +83,6 @@ export const Education: React.FC<EducationProps> = ({ onViewResumeClick }) => {
                 ))}
               </div>
             </div>
-
-            <div className="pt-4 border-t border-[#F2E5DC] text-xs text-[#5A4A42] font-light">
-              Instructional clarity, organized record keeping, and patient communication skills.
-            </div>
           </div>
 
           {/* Right: Languages & Availability */}
@@ -134,10 +130,7 @@ export const Education: React.FC<EducationProps> = ({ onViewResumeClick }) => {
             </div>
 
             {/* Quick CV Action Banner with Spring Buttons */}
-            <div className="pt-6 mt-6 border-t border-[#F2E5DC] space-y-3">
-              <span className="text-xs text-[#5A4A42] block leading-relaxed font-light">
-                Verified curriculum vitae with complete employment history and academic documentation.
-              </span>
+            <div className="pt-6 mt-6 border-t border-[#F2E5DC]">
               <div className="flex flex-wrap gap-2">
                 <motion.button
                   whileHover={{ scale: 1.04 }}
